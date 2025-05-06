@@ -1,0 +1,13 @@
+{
+    "path_checkpoints": [""],
+    "path_loras": [""],
+    "path_embeddings": "",
+    "path_vae_approx": "",
+    "path_vae": "",
+    "path_upscale_models": "",
+    "path_controlnet": "",
+    "path_clip_vision": "",
+    "path_wildcards": "",
+    "path_safety_checker": "",
+    "path_outputs": ""
+}
