@@ -8,6 +8,7 @@ import os
 import json
 import time
 import shared
+import subprocess
 import modules.config
 import fooocus_version
 import modules.html
@@ -217,7 +218,15 @@ with shared.gradio_root:
     currentTask = gr.State(worker.AsyncTask(args=[]))
     inpaint_engine_state = gr.State('empty')
     mode = gr.State(value=modules.config.default_selected_image_input_tab_id)
-
+    
+    # with gr.Row():
+        # gr.Image(
+            # value="logo1.png",            # path or URL to your logo
+            # show_label=False,
+            # interactive=False,
+            # elem_id="app-logo",
+            # height=64                  # adjust as needed
+        # )
 
     ###########################################################
     #      8.1 End of State Declarations                      #
@@ -268,18 +277,20 @@ with shared.gradio_root:
             progress_html = gr.HTML(
                 value=modules.html.make_progress_html(32, "Progress 32%"),
                 visible=False,
+                container=True,           # <-- wrap in its own div
                 elem_id="progress-bar",
                 elem_classes="progress-bar"
-            ) 
+            )
 
 
         ###########################################################
         #         8.2.2 Start of Finished-images Gallery          #
         ###########################################################
 
-            gallery = gr.Gallery(label='Gallery', show_label=False, object_fit='contain', visible=True, height=500,
-                                 elem_classes=['resizable_area', 'main_view', 'final_gallery', 'image_gallery'],
-                                 elem_id='final_gallery')
+            with gr.Accordion("🖼️ Output Images"):
+                gallery = gr.Gallery(label='Gallery', show_label=False, object_fit='contain', visible=True, height=500,
+                                     elem_classes=['resizable_area', 'main_view', 'final_gallery', 'image_gallery'],
+                                     elem_id='final_gallery')
 
         ###########################################################
         #         8.2.2 End of Finished-images Gallery            #
@@ -298,7 +309,7 @@ with shared.gradio_root:
         ###########################################################
 
  
-            with gr.Row():
+            with gr.Accordion("👩 Positive Prompt"):
                 with gr.Column(scale=17):
                     prompt = gr.Textbox(show_label=False, placeholder="Type prompt here or paste parameters.", elem_id='positive_prompt',
                                         autofocus=True, lines=3)
@@ -308,7 +319,7 @@ with shared.gradio_root:
                         shared.gradio_root.load(lambda: default_prompt, outputs=prompt)
             with gr.Row():
                 paste_clipboard_button = gr.Button("Paste Clipboard", elem_id="paste_clipboard_button", elem_classes="flex items-center justify-center h-6 px-3", visible=True)
-                generate_button = gr.Button(value="Generate", elem_classes="flex items-center justify-center h-6 px-3", variant="primary", elem_id='generate_button', visible=True)
+                generate_button = gr.Button(value="fooocus", elem_classes="flex items-center justify-center h-6 px-3", variant="primary", elem_id='generate_button', visible=True)
                 reset_button = gr.Button(value="Reconnect", elem_classes="flex items-center justify-center h-6 px-3", elem_id='reset_button', visible=False)
                 load_parameter_button = gr.Button(value="Load Parameters", elem_classes="flex items-center justify-center h-6 px-3", elem_id='load_parameter_button', visible=False)
                 skip_button = gr.Button(value="Skip", elem_classes="flex items-center justify-center h-6 px-3", elem_id='skip_button', visible=False)
@@ -1126,33 +1137,51 @@ with shared.gradio_root:
                     show_progress=False
                 )
 
-                # set up static paths for logs & outputs
-                LOG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "logs"))
-                gr.set_static_paths(paths=[LOG_DIR])
-                gr.set_static_paths(paths=[modules.config.path_outputs])
+                # Precompute the history‐log URL once
+                abs_html    = get_current_html_path(output_format)
+                rel_html    = os.path.relpath(abs_html, start=modules.config.path_outputs).replace("\\", "/")
+                history_url = f"/gradio_api/file=outputs/{rel_html}"
 
-                # history link updater (unchanged)
-                def update_history_link():
-                    if args_manager.args.disable_image_log:
-                        return gr.update(value="")
-                    abs_html = get_current_html_path(output_format)
-                    rel_html = os.path.relpath(abs_html, start=modules.config.path_outputs).replace("\\", "/")
-                    url = f"/gradio_api/file=outputs/{rel_html}"
-                    return gr.update(value=f'<a href="{url}" target="_blank">📚 History Log</a>')
+                def trigger_crop():
+                    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    bat_path     = os.path.join(project_root, "crop.bat")
+                    if not os.path.isfile(bat_path):
+                        raise FileNotFoundError(f"crop.bat not found at {bat_path}")
+
+                    # Run crop.bat in THIS console
+                    subprocess.Popen(
+                        bat_path,
+                        cwd=project_root,
+                        shell=True
+                    )
 
                 with gr.Blocks() as demo:
-                    history_link = gr.HTML()
-                    demo.load(
-                        fn=update_history_link,
+                    with gr.Row():
+                        history_btn = gr.Button("📚 History Log", variant="link")
+                        crop_btn    = gr.Button("📚 Image Processing", variant="link")
+
+                    # History Log button opens the URL via JS
+                    history_btn.click(
+                        fn=None,
                         inputs=[],
-                        outputs=[history_link],
-                        queue=False,
-                        show_progress=False
+                        outputs=[],
+                        js=f"() => window.open('{history_url}', '_blank')"
+                    )
+
+                    # Image Processing button triggers the batch file
+                    crop_btn.click(
+                        fn=trigger_crop,
+                        inputs=[],
+                        outputs=[]
                     )
 
                 if __name__ == "__main__":
-                    demo.launch(allowed_paths=[modules.config.path_outputs])
-
+                    demo.launch(
+                        server_name="127.0.0.1",
+                        server_port=7861,
+                        share=False,
+                        inbrowser=True
+                    )
 
 
     ###########################################################
@@ -1804,9 +1833,9 @@ with shared.gradio_root:
             ),
             outputs=[generate_button, stop_button, skip_button, state_is_generating]
         ) \
-        .then(fn=update_history_link, outputs=[history_link]) \
-        .then(fn=lambda: None, js='playNotification') \
-        .then(fn=lambda: None, js='refresh_grid_delayed')
+        #.then(fn=update_history_link, outputs=[history_link]) \
+        #.then(fn=lambda: None, js='playNotification') \
+        #.then(fn=lambda: None, js='refresh_grid_delayed')
 
         reset_button.click(lambda: [worker.AsyncTask(args=[]), False, gr.update(visible=True, interactive=True)] +
                                    [gr.update(visible=False)] * 6 +

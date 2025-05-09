@@ -73,6 +73,61 @@ def strip_tags(x):
     s = str(x)                             # ← coerce to string
     return re.sub(r'<[^>]+>', '', s)    
 
+# def get_task(*args):
+    # # 1) Pull off the placeholder AsyncTask
+    # params = list(args)
+    # params.pop(0)
+
+    # # 2) Define your mapping from displayed label → internal key
+    # label_to_key = {
+        # "Upscale / Variation": "uov",
+        # "Image Prompt":         "ip",
+        # "Inpaint / Outpaint":   "inpaint",
+        # "Describe":             "desc",
+        # "Enhance":              "enhance",
+        # "Metadata":             "metadata"
+    # }
+
+    # # 3) Read the raw label in slot 32
+    # raw_label = params[32]
+    # print(f"[get_task] raw input_mode label at slot 32 = {raw_label!r}", flush=True)
+
+    # # 4) Convert to your internal key
+    # key = label_to_key.get(raw_label)
+    # if key is None:
+        # # Safety fallback
+        # print(f"[get_task] WARNING: unrecognized label {raw_label!r}, defaulting to 'uov'", flush=True)
+        # key = "uov"
+
+    # # 5) Overwrite slot 32 with the short key
+    # print(f"[get_task] overwriting slot 32: {params[32]!r} → {key!r}", flush=True)
+    # params[32] = key
+
+    # # 6) (Optional) Log the rest of your parameters
+    # print("\n>>> [get_task] Comprehensive parameter dump", flush=True)
+    # print(f"    total params after pop = {len(params)}\n", flush=True)
+    # for idx, p in enumerate(params):
+        # t = type(p).__name__
+        # # collapse common types
+        # if isinstance(p, (str, bool, int, float)):
+            # print(f"[{idx:02d}] {t}: {p!r}", flush=True)
+        # elif isinstance(p, (list, tuple)):
+            # types = {type(el).__name__: p.count(el) for el in p}
+            # print(f"[{idx:02d}] {t} (len={len(p)}): {types}", flush=True)
+        # elif hasattr(p, "shape") and hasattr(p, "dtype"):
+            # print(f"[{idx:02d}] ndarray shape={p.shape}, dtype={p.dtype}", flush=True)
+        # elif hasattr(p, "size") and hasattr(p, "mode"):
+            # print(f"[{idx:02d}] PIL.Image size={p.size}, mode={p.mode}", flush=True)
+        # elif isinstance(p, dict):
+            # print(f"[{idx:02d}] dict keys={list(p.keys())}", flush=True)
+        # else:
+            # print(f"[{idx:02d}] {t}", flush=True)
+    # print(">>> End of parameter dump\n", flush=True)
+
+    # # 7) Hand off to AsyncTask
+    # return worker.AsyncTask(args=params)
+
+
 def get_task(*args):
     # 1) Pull off the placeholder AsyncTask
     params = list(args)
@@ -90,45 +145,18 @@ def get_task(*args):
 
     # 3) Read the raw label in slot 32
     raw_label = params[32]
-    print(f"[get_task] raw input_mode label at slot 32 = {raw_label!r}", flush=True)
 
     # 4) Convert to your internal key
     key = label_to_key.get(raw_label)
     if key is None:
         # Safety fallback
-        print(f"[get_task] WARNING: unrecognized label {raw_label!r}, defaulting to 'uov'", flush=True)
         key = "uov"
 
     # 5) Overwrite slot 32 with the short key
-    print(f"[get_task] overwriting slot 32: {params[32]!r} → {key!r}", flush=True)
     params[32] = key
-
-    # 6) (Optional) Log the rest of your parameters
-    print("\n>>> [get_task] Comprehensive parameter dump", flush=True)
-    print(f"    total params after pop = {len(params)}\n", flush=True)
-    for idx, p in enumerate(params):
-        t = type(p).__name__
-        # collapse common types
-        if isinstance(p, (str, bool, int, float)):
-            print(f"[{idx:02d}] {t}: {p!r}", flush=True)
-        elif isinstance(p, (list, tuple)):
-            types = {type(el).__name__: p.count(el) for el in p}
-            print(f"[{idx:02d}] {t} (len={len(p)}): {types}", flush=True)
-        elif hasattr(p, "shape") and hasattr(p, "dtype"):
-            print(f"[{idx:02d}] ndarray shape={p.shape}, dtype={p.dtype}", flush=True)
-        elif hasattr(p, "size") and hasattr(p, "mode"):
-            print(f"[{idx:02d}] PIL.Image size={p.size}, mode={p.mode}", flush=True)
-        elif isinstance(p, dict):
-            print(f"[{idx:02d}] dict keys={list(p.keys())}", flush=True)
-        else:
-            print(f"[{idx:02d}] {t}", flush=True)
-    print(">>> End of parameter dump\n", flush=True)
 
     # 7) Hand off to AsyncTask
     return worker.AsyncTask(args=params)
-
-
-
 
 
 
