@@ -12,9 +12,3 @@ has a button to uppload prompt from the clipboard and a feature to change the gr
 I tested the regular image generation, variation and upscale, image prompt and inpaint successfully with Gradio 5.29
 
 Other features have so far not been tested (mainly because I tend personally to fooocus on the above :-) )
-
-I am looking for a nice logo ... what about this one?
-
-https://drive.google.com/file/d/1q4SEVWthbIjBXzndFlO06MgEsEgy-G99/view?usp=drive_link
-
-notice the 3 "O" and the magnifying glass symbolising Focus ... I thought it was clever anyway!
