@@ -37,6 +37,21 @@ import re
 
 CONFIG_FILENAME = "theme_config.json"
 CONFIG_PATH     = os.path.join(os.path.dirname(__file__), CONFIG_FILENAME)
+ADD_FEATURES_FILE = os.path.join(os.path.dirname(__file__), "add_features.json")
+
+
+def on_feature_toggle(ip_val, pg_val):
+    print(f"[DEBUG] _on_feature_toggle called with ip_val={ip_val}, pg_val={pg_val}")  
+    try:
+        with open(ADD_FEATURES_FILE, "w") as f:
+            json.dump({"ip_toggle": ip_val, "pg_toggle": pg_val}, f)
+        print(f"[DEBUG] Wrote to {ADD_FEATURES_FILE}")
+    except Exception as e:
+        print(f"[ERROR] Writing JSON failed: {e}")
+    return gr.update(visible=ip_val), gr.update(visible=pg_val)
+
+
+
 
 def change_theme(selected):
         # Save new selection (will create or overwrite the JSON)

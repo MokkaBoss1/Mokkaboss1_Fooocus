@@ -1,0 +1,313 @@
+[
+    {
+        "name": "000 Avant Garde Marcel Duchamp",
+		"prompt": "avant garde painting in the style of Marcel Duchamp, {prompt}",
+        "negative_prompt": "border, frame"
+    },
+	{
+        "name": "000 Avant Garde Aleksandra Ekster",
+		"prompt": "avant garde painting in the style of Aleksandra Ekster, {prompt}",
+        "negative_prompt": "border, frame"
+    },
+	{
+        "name": "000 Avant Garde Natalia Goncharova",
+		"prompt": "avant garde painting in the style of Natalia Goncharova, {prompt}",
+        "negative_prompt": "border, frame"
+    },
+	{
+        "name": "000 Avant Garde Picasso",
+		"prompt": "avant garde painting in the style of Picasso, {prompt}",
+        "negative_prompt": "border, frame"
+    },
+	{
+        "name": "000 Art Nouveau Egon Schiele",
+		"prompt": "art nouveau painting in the style of Egon Schiele, {prompt}",
+        "negative_prompt": "border, frame"
+    },
+	{
+        "name": "000 Art Nouveau Toulouse Lautrec",
+		"prompt": "art nouveau painting in the style of Henri de Toulouse-Lautrec, {prompt}",
+        "negative_prompt": "border, frame"
+    },
+	{
+        "name": "000 Art Nouveau Alphonse Mucha",
+		"prompt": "art nouveau painting in the style of Alphonse Mucha, {prompt}",
+        "negative_prompt": "border, frame"
+    },
+	{
+        "name": "000 Art Nouveau Aubrey Beardsley",
+		"prompt": "art nouveau painting in the style of Aubrey Beardsley, {prompt}",
+        "negative_prompt": "border, frame"
+    },
+	{
+        "name": "000 Art Deco Jean Dunand",
+		"prompt": "art deco painting in the style of Jean Dunand, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Art Deco Le Corbusier",
+		"prompt": "art deco painting in the style of Le Corbusier, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Art Deco Charles-Édouard Jeanneret-Gris",
+		"prompt": "art deco painting in the style of Charles-Édouard Jeanneret-Gris, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Art Deco Rene Lalique",
+		"prompt": "art deco painting in the style of Willem de Kooning, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Abstract Expressionism Willem de Kooning",
+		"prompt": "abstract expressionism painting in the style of Willem de Kooning, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Abstract Expressionism  Lee Krasner",
+		"prompt": "abstract expressionism painting in the style of  Lee Krasner, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Abstract Expressionism Jackson Pollock",
+		"prompt": "abstract expressionism painting in the style of Jackson Pollock, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Abstract Expressionism Elaine de Kooning",
+		"prompt": "abstract expressionism painting in the style of Elaine de Kooning, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Baroque Peter Paul Rubens",
+		"prompt": "baroque painting in the style of Peter Paul Rubens, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Baroque Caravaggio",
+		"prompt": "baroque painting in the style of Caravaggio, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Baroque Diego Velazquez",
+		"prompt": "baroque painting in the style of Diego Velázquez, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Baroque Rembrandt van Rijn",
+		"prompt": "baroque painting in the style of Rembrandt van Rijn, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Baroque Nicolas Poussin",
+		"prompt": "baroque painting in the style of Nicolas Poussin, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Baroque Mary Beale",
+		"prompt": "baroque painting in the style of Mary Beale, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Classisicm Annibale Carracci",
+		"prompt": "classisicm painting in the style of Annibale Carracci, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Classisicm Claude Lorrain",
+		"prompt": "baroque painting in the style of Claude Lorrain, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Classisicm Jacques-Louis David",
+		"prompt": "baroque painting in the style of Jacques-Louis David, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Classisicm Jean-Auguste Dominique Ingres",
+		"prompt": "baroque painting in the style of Jean-Auguste Dominique Ingres, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Classisicm Anton Raphael Mengs",
+		"prompt": "baroque painting in the style of Anton Raphael Mengs, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "000 Baroque Thomas Gainsborough",
+		"prompt": "baroque painting in the style of Thomas Gainsborough, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Cubism Georges Braque",
+		"prompt": "cubism painting in the style of Georges Braque, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Cubism Juan Gris",
+		"prompt": "cubism painting in the style of Juan Gris, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Cubism Marie Laurencin",
+		"prompt": "cubism painting in the style of Marie Laurencin, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Cubism Sonia Delaunay",
+		"prompt": "cubism painting in the style of Sonia Delaunay, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Dadaism Marcel Duchamp",
+		"prompt": "dadaism painting in the style of Marcel Duchamp, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Dadaism Hans Arp",
+		"prompt": "dadaism painting in the style of Hans Arp, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Dadaism Hannah Hoech",
+		"prompt": "dadaism painting in the style of Hannah Höch, {prompt}",
+        "negative_prompt": "border, frame"
+	},
+	{
+        "name": "000 Dadaism Sophie Taeuber-Arp",
+		"prompt": "dadaism painting in the style of Sophie Taeuber-Arp, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "000 Expressionism Edvard Munch",
+		"prompt": "expressionism painting in the style of Edvard Munch, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "000 Expressionism Wassily Kandinsky",
+		"prompt": "dadaism painting in the style of Sophie Taeuber-Arp, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "000 Expressionism Gabriele Muenter",
+		"prompt": "expressionism painting in the style of Gabriele Münter, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "000 Expressionism Kaethe Kollwitz",
+		"prompt": "expressionism painting in the style of Käthe Kollwitz, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "000 Futurism Filippo Tommaso Marinetti",
+		"prompt": "expressionism painting in the style of Filippo Tommaso Marinetti, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "000 Futurism Luigi Russolo",
+		"prompt": "futurism painting in the style of Luigi Russolo, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "000 Futurism Natalia Goncharova",
+		"prompt": "futurism painting in the style of Natalia Goncharova, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "000 Futurism Benedetta Cappa Marinetti",
+		"prompt": "futurism painting in the style of Benedetta Cappa Marinetti, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	
+	{
+        "name": "000 Gothic Art Giotto",
+		"prompt": "gothic art painting in the style of Giotto, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+		{
+        "name": "000 Gothic Art Duccio di Buoninsegna",
+		"prompt": "gothic art painting in the style of Duccio di Buoninsegna, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+		{
+        "name": "000 Gothic Art Cimabue",
+		"prompt": "gothic art painting in the style of Cimabue, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+		{
+        "name": "000 Gothic Art Fra Angelico",
+		"prompt": "gothic art painting in the style of Fra Angelico, {prompt}",
+        "negative_prompt": "border, frame"
+	},	
+	{
+        "name": "Photomaker Cinematic",
+		"prompt": "cinematic still undefined . emotional, harmonious, vignette, highly detailed, high budget, bokeh, cinemascope, moody, epic, gorgeous, film grain, grainy, {prompt}",
+        "negative_prompt": "anime, cartoon, graphic, text, painting, crayon, graphite, abstract, glitch, deformed, mutated, ugly, disfigured undefined"
+	},	
+	{
+        "name": "Photomaker Disney Character",
+		"prompt": "A Pixar animation character of undefined . pixar-style, studio anime, Disney, high-quality, {prompt}",
+        "negative_prompt": "lowres, bad anatomy, bad hands, text, bad eyes, bad arms, bad legs, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, blurry, grayscale, noisy, sloppy, messy, grainy, highly detailed, ultra textured, photo undefined, {prompt}"
+	},	
+	{
+        "name": "Photomaker Digitial Art",
+		"prompt": "concept art undefined . digital artwork, illustrative, painterly, matte painting, highly detailed, {prompt}",
+        "negative_prompt": "photo, photorealistic, realism, ugly undefined, {prompt} "
+	},	
+	{
+        "name": "Photomaker Photographic (Default)",
+		"prompt": "cinematic photo undefined . 35mm photograph, film, bokeh, professional, 4k, highly detailed, {prompt}",
+        "negative_prompt": "drawing, painting, crayon, sketch, graphite, impressionist, noisy, blurry, soft, deformed, ugly undefined, {prompt}"
+	},
+	{
+        "name": "Photomaker Fantasy Art",
+		"prompt": "ethereal fantasy concept art of  undefined . magnificent, celestial, ethereal, painterly, epic, majestic, magical, fantasy art, cover art, dreamy, {prompt}",
+        "negative_prompt": "photographic, realistic, realism, 35mm film, dslr, cropped, frame, text, deformed, glitch, noise, noisy, off-center, deformed, cross-eyed, closed eyes, bad anatomy, ugly, disfigured, sloppy, duplicate, mutated, black and white undefined, {prompt}"
+	},
+	{
+        "name": "Photomaker Neonpunk",
+		"prompt": "neonpunk style undefined . cyberpunk, vaporwave, neon, vibes, vibrant, stunningly beautiful, crisp, detailed, sleek, ultramodern, magenta highlights, dark purple shadows, high contrast, cinematic, ultra detailed, intricate, professional, {prompt}",
+        "negative_prompt": "painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured undefined, {prompt}"
+	},
+	{
+        "name": "Photomaker Enhance",
+		"prompt": "breathtaking undefined . award-winning, professional, highly detailed, {prompt}",
+        "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy undefined, {prompt}"
+	},
+	{
+        "name": "Photomaker Comic Book",
+		"prompt": "comic undefined . graphic illustration, comic art, graphic novel art, vibrant, highly detailed, {prompt}",
+        "negative_prompt": "photograph, deformed, glitch, noisy, realistic, stock photo undefined, {prompt}"
+	},
+		{
+        "name": "Photomaker Lowpoly",
+		"prompt": "low-poly style undefined . low-poly game art, polygon mesh, jagged, blocky, wireframe edges, centered composition, {prompt}",
+        "negative_prompt": "noisy, sloppy, messy, grainy, highly detailed, ultra textured, photo undefined, {prompt}"
+	},
+	{
+        "name": "Photomaker Lineart",
+		"prompt": "line art drawing undefined . professional, sleek, modern, minimalist, graphic, line art, vector graphics, {prompt}",
+        "negative_prompt": "anime, photorealistic, 35mm film, deformed, glitch, blurry, noisy, off-center, deformed, cross-eyed, closed eyes, bad anatomy, ugly, disfigured, mutated, realism, realistic, impressionism, expressionism, oil, acrylic undefined, {prompt}"
+	},
+	{
+        "name": "000 Sarah",
+		"prompt": "21 year old, pretty European model, medium breasts, {prompt}",
+        "negative_prompt": "sfw, nude, naked, nipples, {prompt}"
+	},
+		{
+        "name": "000 Sarah Studio",
+		"prompt": "plaing gradient background, {prompt}",
+        "negative_prompt": ""
+	},
+	
+	
+	
+	
+	
+	{
+        "name": "000 SFW",
+		"prompt": "{prompt}",
+        "negative_prompt": "nsfw, nude, naked, nipples"
+    }
+]

@@ -1,0 +1,1176 @@
+{
+    "Formal Gala": [
+        {
+            "general": "Floor  length sheath gown with a subtle scoop neckline",
+            "close_up": "Floor  length sheath gown with a subtle scoop neckline",
+            "half_body": "Sheath gown silhouette",
+            "full_body": "Sheath gown silhouette + (Pointed  toe stilettos:1.5)"
+        },
+        {
+            "general": "Strapless mermaid cut gown with a defined silhouette",
+            "close_up": "Strapless mermaid cut gown with a defined silhouette",
+            "half_body": "Mermaid cut gown silhouette",
+            "full_body": "Mermaid cut gown silhouette + (Strappy heels:1.5)"
+        },
+        {
+            "general": "One shoulder column dress with an asymmetrical drape",
+            "close_up": "One shoulder column dress with an asymmetrical drape",
+            "half_body": "Column dress silhouette",
+            "full_body": "Column dress silhouette + (Heeled sandals:1.5)"
+        },
+        {
+            "general": "High neck A line gown with a fitted bodice",
+            "close_up": "High neck A line gown with a fitted bodice",
+            "half_body": "A line gown silhouette",
+            "full_body": "A line gown silhouette + (Classic pumps:1.5)"
+        },
+        {
+            "general": "Floor length gown with a fitted bodice and flowing skirt",
+            "close_up": "Floor length gown with a fitted bodice and flowing skirt",
+            "half_body": "Fitted bodice gown with flowing skirt",
+            "full_body": "Fitted bodice gown with flowing skirt + (Elegant stilettos:1.5)"
+        },
+        {
+            "general": "Draped overlay dress with belted waist",
+            "close_up": "Draped overlay dress with belted waist",
+            "half_body": "Draped overlay dress silhouette",
+            "full_body": "Draped overlay dress silhouette + (Slingback heels:1.5)"
+        }
+    ],
+    "Professional": [
+        {
+            "general": "Structured blazer with tapered trousers",
+            "close_up": "Structured blazer with clean lapels",
+            "half_body": "Blazer + Tapered trousers",
+            "full_body": "Blazer + Tapered trousers + (Closed toe pumps:1.5)"
+        },
+        {
+            "general": "Sleeveless sheath dress with a belted waist",
+            "close_up": "Sleeveless sheath dress with defined waistline",
+            "half_body": "Sheath dress silhouette",
+            "full_body": "Sheath dress silhouette + (Pointed toe pumps:1.5)"
+        },
+        {
+            "general": "High waisted pencil skirt with a collared blouse",
+            "close_up": "Collared blouse tucked into pencil skirt",
+            "half_body": "Blouse + Pencil skirt",
+            "full_body": "Blouse + Pencil skirt + (Classic pumps:1.5)"
+        },
+        {
+            "general": "Wrap midi dress with a waist cinching tie",
+            "close_up": "Wrap dress neckline and tie detail",
+            "half_body": "Wrap midi dress silhouette",
+            "full_body": "Wrap midi dress silhouette + (Mid heel sandals:1.5)"
+        },
+        {
+            "general": "Tailored vest with ankle length trousers",
+            "close_up": "Fitted vest with sharp neckline",
+            "half_body": "Vest + Ankle length trousers",
+            "full_body": "Vest + Ankle length trousers + (Loafers:1.5)"
+        },
+        {
+            "general": "Coordinated skirt suit with fitted blazer",
+            "close_up": "Fitted blazer over a simple blouse",
+            "half_body": "Blazer + Knee length skirt",
+            "full_body": "Blazer + Knee length skirt + (Professional pumps:1.5)"
+        }
+    ],
+    "Birthday Party": [
+        {
+            "general": "Fitted crop top with belted high  waisted tailored shorts",
+            "close_up": "Crop top neckline with belt  accented waist",
+            "half_body": "Crop top + High waisted tailored shorts",
+            "full_body": "Crop top + High waisted tailored shorts + (Strappy block  heel sandals:1.5)"
+        },
+        {
+            "general": "Fitted camisole with a pleated mini skirt",
+            "close_up": "Camisole neckline with pleated fold detail",
+            "half_body": "Camisole + Pleated mini skirt",
+            "full_body": "Camisole + Pleated mini skirt + (Stiletto heels:1.5)"
+        },
+        {
+            "general": "Off  shoulder top with a high  waisted midi skirt",
+            "close_up": "Off  shoulder neckline with fitted bodice",
+            "half_body": "Off  shoulder top + High  waisted midi skirt",
+            "full_body": "Off  shoulder top + High  waisted midi skirt + (Ankle  strap heels:1.5)"
+        },
+        {
+            "general": "Printed wrap top with a button  front A  line skirt",
+            "close_up": "Wrap top neckline with skirt button detail",
+            "half_body": "Wrap top + A line skirt",
+            "full_body": "Wrap top + A line skirt + (Platform espadrilles:1.5)"
+        },
+        {
+            "general": "Ruffle neck blouse with tailored cropped culottes",
+            "close_up": "Ruffle neckline with culotte waist detail",
+            "half_body": "Ruffle blouse + Cropped culottes",
+            "full_body": "Ruffle blouse + Cropped culottes + (Block  heel sandals:1.5)"
+        },
+        {
+            "general": "Peasant style blouse tucked into a flared midi skirt",
+            "close_up": "Blouse neckline with skirt flare silhouette",
+            "half_body": "Peasant blouse + Flared midi skirt",
+            "full_body": "Peasant blouse + Flared midi skirt + (Slingback sandals:1.5)"
+        }
+    ],
+    "Casual": [
+        {
+            "general": "Slub knit V neck tee with a half  tuck silhouette",
+            "close_up": "Slub knit V neck tee with a half  tuck silhouette",
+            "half_body": "V neck tee + Slim straight leg jeans",
+            "full_body": "V neck tee + Slim straight leg jeans + (Low  profile leather sneakers:1.5)"
+        },
+        {
+            "general": "Utility overshirt layered over a fitted crew  neck tee",
+            "close_up": "Utility overshirt layered over a fitted crew  neck tee",
+            "half_body": "Utility overshirt + Straight  leg jeans",
+            "full_body": "Utility overshirt + Straight  leg jeans + (Minimal leather trainers:1.5)"
+        },
+        {
+            "general": "Fine gauge crew  neck sweatshirt with tapered cargo joggers",
+            "close_up": "Fine gauge crew  neck sweatshirt with tapered cargo joggers",
+            "half_body": "Crew neck sweatshirt + Tapered cargo joggers",
+            "full_body": "Crew neck sweatshirt + Tapered cargo joggers + (Suede desert boots:1.5)"
+        },
+        {
+            "general": "Classic polo shirt with tailored chinos",
+            "close_up": "Classic polo shirt with tailored chinos",
+            "half_body": "Polo shirt + Tailored chinos",
+            "full_body": "Polo shirt + Tailored chinos + (Leather slip  on loafers:1.5)"
+        },
+        {
+            "general": "Fitted graphic tee with high  waisted mom jeans",
+            "close_up": "Fitted graphic tee with high  waisted mom jeans",
+            "half_body": "Graphic tee + High  waisted mom jeans",
+            "full_body": "Graphic tee + High  waisted mom jeans + (Retro leather sneakers:1.5)"
+        },
+        {
+            "general": "Lightweight overshirt paired with slim  fitting joggers",
+            "close_up": "Lightweight overshirt paired with slim  fitting joggers",
+            "half_body": "Overshirt + Slim fitting joggers",
+            "full_body": "Overshirt + Slim fitting joggers + (Suede chukka boots:1.5)"
+        }
+    ],
+    "Sporty": [
+        {
+            "general": "Racerback tank with strategic mesh inserts and sculpting seams",
+            "close_up": "Racerback neckline with mesh side panels",
+            "half_body": "Racerback tank + High  rise performance leggings",
+            "full_body": "Racerback tank + Performance leggings + (Running trainers:1.5)"
+        },
+        {
+            "general": "Zip neck compression top with thumbhole cuffs",
+            "close_up": "Zip neck front with integrated thumbholes",
+            "half_body": "Zip neck top + 7/8 compression leggings",
+            "full_body": "Zip neck top + 7/8 leggings + (Lightweight running trainers:1.5)"
+        },
+        {
+            "general": "Supportive crop top with built in bra and ventilation panels",
+            "close_up": "Crop top bust support with micro vent panels",
+            "half_body": "Crop top + High waist compression shorts",
+            "full_body": "Crop top + Compression shorts + (Stability running trainers:1.5)"
+        },
+        {
+            "general": "Long sleeve performance top with reflective trim",
+            "close_up": "Long sleeve top with reflective piping",
+            "half_body": "Long sleeve top + Tapered moisture  wicking leggings",
+            "full_body": "Long sleeve top + Leggings + (Trail running shoes:1.5)"
+        },
+        {
+            "general": "Lightweight windbreaker with reflective accents",
+            "close_up": "Windbreaker zip front with reflective stripes",
+            "half_body": "Windbreaker + High  rise bike shorts",
+            "full_body": "Windbreaker + Bike shorts + (Cross  training trainers:1.5)"
+        },
+        {
+            "general": "Hooded pullover with ventilation panels and slim joggers",
+            "close_up": "Pullover hood with mesh vents",
+            "half_body": "Hooded pullover + Joggers with zip ankle cuffs",
+            "full_body": "Hooded pullover + Joggers + (High grip training shoes:1.5)"
+        }
+    ],
+    "Beach": [
+        {
+            "general": "Adjustable bikini top with tropical accents and high  rise tie  side bottoms",
+            "close_up": "Adjustable bikini top straps with tie side bottom details",
+            "half_body": "Bikini top + High rise tie side bottoms",
+            "full_body": "Bikini top + High rise tie side bottoms + (Supportive slide sandals:1.5)"
+        },
+        {
+            "general": "One piece suit with secure back strap and moderate plunge",
+            "close_up": "Plunge neckline with hidden back strap support",
+            "half_body": "One piece swimsuit silhouette",
+            "full_body": "One piece swimsuit + (Ankle  strap slide sandals:1.5)"
+        },
+        {
+            "general": "Ruched tankini top with shelf  bra and mid  rise swim bottoms",
+            "close_up": "Tankini ruching at waist with built  in shelf  bra",
+            "half_body": "Tankini top + Mid rise matching bottoms",
+            "full_body": "Tankini top + Mid rise matching bottoms + (Water  resistant slide sandals:1.5)"
+        },
+        {
+            "general": "Tie front sarong cover  up over a bandeau suit",
+            "close_up": "Sarong tie waist detail with bandeau beneath",
+            "half_body": "Sarong wrap + Bandeau swimsuit",
+            "full_body": "Sarong wrap + Bandeau swimsuit + (Espadrille wedge sandals:1.5)"
+        },
+        {
+            "general": "UV protective rash guard with printed boardshorts",
+            "close_up": "Rash guard seam with UV rating print and shorts pattern",
+            "half_body": "Rash guard + Printed boardshorts",
+            "full_body": "Rash guard + Printed boardshorts + (Sporty water shoes:1.5)"
+        },
+        {
+            "general": "Elastic off shoulder beach dress with swim base",
+            "close_up": "Off shoulder elastic neckline over swimsuit bodice",
+            "half_body": "Off shoulder dress silhouette",
+            "full_body": "Off shoulder dress silhouette + (Woven slide sandals:1.5)"
+        }
+    ],
+    "Date Night": [
+        {
+            "general": "Fitted off shoulder midi dress with side slit",
+            "close_up": "Off shoulder neckline with side slit detail",
+            "half_body": "Midi dress silhouette",
+            "full_body": "Midi dress silhouette + (Ankle  strap heels:1.5)"
+        },
+        {
+            "general": "Cowl neck bodysuit tucked into high  waist wide  leg trousers",
+            "close_up": "Cowl neck bodysuit neckline and waist seam",
+            "half_body": "Cowl neck bodysuit + Wide leg trousers",
+            "full_body": "Cowl neck bodysuit + Wide leg trousers + (Pointed  toe pumps:1.5)"
+        },
+        {
+            "general": "Lace trim slip midi dress with delicate straps",
+            "close_up": "Lace trim neckline with spaghetti straps",
+            "half_body": "Slip midi dress silhouette",
+            "full_body": "Slip midi dress silhouette + (Strappy stilettos:1.5)"
+        },
+        {
+            "general": "Silk wrap midi dress with defined waist tie",
+            "close_up": "Wrap waist tie and fluid drape",
+            "half_body": "Wrap midi dress silhouette",
+            "full_body": "Wrap midi dress silhouette + (Elegant stilettos:1.5)"
+        },
+        {
+            "general": "One shoulder ruffled bodysuit paired with tailored cigarette pants",
+            "close_up": "One shoulder ruffle detail with bodysuit seam",
+            "half_body": "Ruffled bodysuit + Cigarette pants",
+            "full_body": "Ruffled bodysuit + Cigarette pants + (Block  heel mules:1.5)"
+        },
+        {
+            "general": "Plunging V neck jumpsuit with cinched waist",
+            "close_up": "Deep V neckline and waistband detail",
+            "half_body": "Jumpsuit silhouette",
+            "full_body": "Jumpsuit silhouette + (Stiletto pumps:1.5)"
+        }
+    ],
+    "Lingerie": [
+        {
+            "general": "Underwire lace balconette bra with adjustable straps",
+            "close_up": "Balconette bra with scalloped lace cups and hook  and  eye back",
+            "half_body": "Lace balconette bra + High cut thong",
+            "full_body": "Lace balconette bra + High cut thong"
+        },
+        {
+            "general": "Silk slip chemise with lace trimmed bodice",
+            "close_up": "Silk chemise neckline with delicate lace inset and adjustable straps",
+            "half_body": "Silk chemise silhouette",
+            "full_body": "Silk chemise silhouette"
+        },
+        {
+            "general": "Sheer mesh bodysuit with power  net support panels",
+            "close_up": "Mesh bodysuit with reinforced bust panels and snap crotch closure",
+            "half_body": "Mesh bodysuit silhouette",
+            "full_body": "Mesh bodysuit silhouette"
+        },
+        {
+            "general": "Structured lace corset with satin ribbon lacing",
+            "close_up": "Corset front with satin lace  up detail and boning seams",
+            "half_body": "Lace corset + Matching boyshorts",
+            "full_body": "Lace corset + Matching boyshorts"
+        },
+        {
+            "general": "Delicate lace bralette with soft microfiber briefs",
+            "close_up": "Lace bralette with soft elastic band and microfiber briefs waistband",
+            "half_body": "Lace bralette + Microfiber briefs",
+            "full_body": "Lace bralette + Microfiber briefs"
+        },
+        {
+            "general": "Modal camisole with lace inset and coordinating shorts",
+            "close_up": "Modal camisole with lace shoulder straps and inset",
+            "half_body": "Modal camisole + Lace trimmed shorts",
+            "full_body": "Modal camisole + Lace trimmed shorts"
+        }
+    ],
+    "Outdoor": [
+        {
+            "general": "UPF rated moisture wicking crew neck tee with mesh side vent panels",
+            "close_up": "Crew neck tee with micro mesh ventilation detail",
+            "half_body": "Crew neck tee + Convertible hiking pants",
+            "full_body": "Crew neck tee + Convertible hiking pants + (Hiking boots:1.5)"
+        },
+        {
+            "general": "Moisture wicking long sleeve sun shirt with thumb loop cuffs",
+            "close_up": "Zip neck sun shirt with integrated thumb loops",
+            "half_body": "Sun shirt + Quick dry cargo shorts",
+            "full_body": "Sun shirt + Cargo shorts + (Trail running shoes:1.5)"
+        },
+        {
+            "general": "Packable soft shell jacket with adjustable hem and zip pockets",
+            "close_up": "Soft shell jacket with sealed zip pocket detail",
+            "half_body": "Soft shell jacket + Stretch trekking pants",
+            "full_body": "Soft shell jacket + Trekking pants + (Waterproof hiking boots:1.5)"
+        },
+        {
+            "general": "Lightweight insulated vest with wind resistant panels",
+            "close_up": "Insulated vest with bonded windblock panels",
+            "half_body": "Insulated vest + Stretch hiking pants",
+            "full_body": "Insulated vest + Stretch hiking pants + (All terrain boots:1.5)"
+        },
+        {
+            "general": "Breathable fleece mid layer with articulated sleeves",
+            "close_up": "Fleece mid layer with ergonomic sleeve seams",
+            "half_body": "Fleece mid layer + Hiking leggings",
+            "full_body": "Fleece mid layer + Hiking leggings + (Approach shoes:1.5)"
+        },
+        {
+            "general": "Waterproof rain shell with taped seams and adjustable hood",
+            "close_up": "Rain shell with taped seam and hood cinch detail",
+            "half_body": "Rain shell + Waterproof trail pants",
+            "full_body": "Rain shell + Trail pants + (Gore Tex boots:1.5)"
+        }
+    ],
+    "Music Festival": [
+        {
+            "general": "Crochet halter top with adjustable neckline and built  in lining",
+            "close_up": "Tie neck detail with scalloped crochet edge",
+            "half_body": "Crochet halter top + Tiered mini skirt with lining",
+            "full_body": "Crochet halter top + Tiered mini skirt + (Chunky platform ankle boots:1.5)"
+        },
+        {
+            "general": "Mesh graphic tee with built in bralette and secure hem",
+            "close_up": "Mesh panel with contrast binding",
+            "half_body": "Mesh tee + Utility cargo shorts with zip pockets",
+            "full_body": "Mesh tee + Cargo shorts + (Lace  up combat boots:1.5)"
+        },
+        {
+            "general": "Off  shoulder smocked crop top with UV  protective long sleeves",
+            "close_up": "Smocked neckline and thumb loop cuffs",
+            "half_body": "Smocked crop top + Stretch denim cutoffs with inner lining",
+            "full_body": "Smocked crop top + Denim cutoffs + (Supportive platform sandals:1.5)"
+        },
+        {
+            "general": "Reflective trim bodysuit with high  cut leg and snap closure",
+            "close_up": "Bodysuit with reflective piping and snap  crotch",
+            "half_body": "Bodysuit + Wide leg cargo pants with belt loops",
+            "full_body": "Bodysuit + Cargo pants + (Chunky athletic sneakers:1.5)"
+        },
+        {
+            "general": "Lightweight fringe vest layered over a fitted bralette",
+            "close_up": "Fringe trim and secure snap front",
+            "half_body": "Fringe vest + High  waisted printed biker shorts",
+            "full_body": "Fringe vest + Biker shorts + (Ankle combat boots:1.5)"
+        },
+        {
+            "general": "Strappy utility romper with adjustable waist and hidden pockets",
+            "close_up": "Romper zipper front and waist  tie detail",
+            "half_body": "Romper silhouette with cinched waist",
+            "full_body": "Romper silhouette + (Supportive lace  up boots:1.5)"
+        }
+    ],
+    "Cosplay": [
+        {
+            "general": "Cyberpunk hacker ensemble with neon trimmed trench coat and tech accessories",
+            "close_up": "LED embedded goggles with neon trim",
+            "half_body": "Neon trench coat + Holographic crop top",
+            "full_body": "Neon trench coat + Holographic crop top + (Platform combat boots:1.5)"
+        },
+        {
+            "general": "Gothic Lolita outfit featuring lace blouse and tiered mini skirt",
+            "close_up": "High neck lace blouse with scalloped trim",
+            "half_body": "Lace blouse + Tiered mini skirt",
+            "full_body": "Lace blouse + Tiered mini skirt + (Lace up Mary Janes:1.5)"
+        },
+        {
+            "general": "Fantasy knight costume with embossed breastplate and flowing cape",
+            "close_up": "Embossed breastplate with metallic finish",
+            "half_body": "Breastplate armor + Flowing cape",
+            "full_body": "Breastplate armor + Flowing cape + (Knee high leather boots:1.5)"
+        },
+        {
+            "general": "Magical girl ensemble with pastel pleated skirt and frilly bolero",
+            "close_up": "Frilly bolero with ribbon tie",
+            "half_body": "Frilly bolero + Pleated mini skirt",
+            "full_body": "Frilly bolero + Pleated mini skirt + (Thigh high boots:1.5)"
+        },
+        {
+            "general": "Steampunk inventor look with leather corset and gear adorned goggles",
+            "close_up": "Brass gear goggles with adjustable straps",
+            "half_body": "Leather corset + Ruffled bustle skirt",
+            "full_body": "Leather corset + Ruffled bustle skirt + (Victorian ankle boots:1.5)"
+        },
+        {
+            "general": "Post apocalyptic scavenger outfit with utility jumpsuit and bandolier",
+            "close_up": "Bandolier with weathered pouches",
+            "half_body": "Utility jumpsuit + Bandolier",
+            "full_body": "Utility jumpsuit + Bandolier + (Chunky combat boots:1.5)"
+        },
+        {
+            "general": "Space explorer suit with metallic bodysuit and structured jacket",
+            "close_up": "Metallic suit seam with utility patches",
+            "half_body": "Metallic bodysuit + Structured jacket",
+            "full_body": "Metallic bodysuit + Structured jacket + (Futuristic boots:1.5)"
+        },
+        {
+            "general": "Anime ninja attire with fitted tunic and hakama pants",
+            "close_up": "Tunic collar with decorative knot",
+            "half_body": "Fitted tunic + Hakama pants",
+            "full_body": "Fitted tunic + Hakama pants + (Tabi boots:1.5)"
+        },
+        {
+            "general": "Pirate captain costume with tricorn hat and ruffled shirt",
+            "close_up": "Tricorn hat with feather accent",
+            "half_body": "Ruffled shirt + Waistcoat vest",
+            "full_body": "Ruffled shirt + Waistcoat vest + (Knee high pirate boots:1.5)"
+        },
+        {
+            "general": "Medieval sorceress ensemble with velvet robe and enchanted amulet",
+            "close_up": "Enchanted pendant with ornate chain",
+            "half_body": "Velvet robe + Enchanted amulet",
+            "full_body": "Velvet robe + Enchanted amulet + (Embroidered flats:1.5)"
+        },
+        {
+            "general": "Mecha pilot uniform with reinforced flight suit and harness",
+            "close_up": "Flight suit chest panel with indicator lights",
+            "half_body": "Reinforced flight suit + Utility harness",
+            "full_body": "Reinforced flight suit + Utility harness + (Reinforced combat boots:1.5)"
+        },
+        {
+            "general": "Victorian ghost costume with sheer lace gown and ribbon choker",
+            "close_up": "Sheer lace neckline with ribbon choker",
+            "half_body": "Sheer lace gown + Ribbon choker",
+            "full_body": "Sheer lace gown + Ribbon choker + (Victorian ankle boots:1.5)"
+        }
+    ],
+    "Victorian": [
+        {
+            "general": "High neck lace blouse with button  front bodice and basque waist",
+            "close_up": "Intricate lace collar with covered button and hook  and  eye closure",
+            "half_body": "Lace blouse + Layered bustle skirt",
+            "full_body": "Lace blouse + Layered bustle skirt + (Lace up button boots:1.5)"
+        },
+        {
+            "general": "Corseted evening gown with satin trimmed basque bodice and slight train",
+            "close_up": "Boned corset with satin ribbons and covered hook  and  eye closures",
+            "half_body": "Basque bodice + Full circle skirt with train",
+            "full_body": "Basque bodice + Skirt with train + (Button front ankle boots:1.5)"
+        },
+        {
+            "general": "Tailored daytime riding habit: high collar blouse, fitted vest, and sweeping skirt",
+            "close_up": "Stiff collar with ornate button detailing and vest lapel",
+            "half_body": "High  collar blouse + Fitted vest",
+            "full_body": "Blouse + Vest + Floor  length skirt + (Lace  up riding boots:1.5)"
+        },
+        {
+            "general": "Tea  time dress in cotton sateen with puffed sleeves and flounced hem",
+            "close_up": "Puffed sleeve with lace trimmed cuff and covered buttons",
+            "half_body": "Tea dress bodice + Flounced midi skirt",
+            "full_body": "Tea dress + (Button  front ankle boots:1.5)"
+        },
+        {
+            "general": "Promenade ensemble with tiers of petticoats under a high  collar bodice",
+            "close_up": "Bodice seam with piped edges and decorative covered buttons",
+            "half_body": "Fitted bodice + Multi tier petticoat skirt",
+            "full_body": "Bodice + Petticoat skirt + (Victorian lace  up boots:1.5)"
+        },
+        {
+            "general": "Silk taffeta ball gown with basque bodice and sweeping train",
+            "close_up": "Silk brocade bodice with ribbon lacing and supporting boning",
+            "half_body": "Fitted bodice + Full ball skirt",
+            "full_body": "Ball gown + Train + (Ottoman  heeled button boots:1.5)"
+        }
+    ],
+    "Medieval": [
+        {
+            "general": "Linen chemise under a belted wool kirtle",
+            "close_up": "Gathered chemise yoke with wooden belt buckle detail",
+            "half_body": "Chemise + Wool kirtle",
+            "full_body": "Chemise + Wool kirtle + Belt + (Leather turnshoes:1.5)"
+        },
+        {
+            "general": "Silk surcoat over a fitted wool kirtle with an embroidered belt",
+            "close_up": "Silk surcoat embroidery and metal belt clasp detail",
+            "half_body": "Wool kirtle + Silk surcoat",
+            "full_body": "Kirtle + Surcoat + (Ankle  height turnshoes:1.5)"
+        },
+        {
+            "general": "Velvet cotehardie with side laced bodice and trailing sleeve cuffs",
+            "close_up": "Side  lace eyelets with silk cord and sleeve cuff embroidery",
+            "half_body": "Cotehardie + Linen underdress",
+            "full_body": "Cotehardie + Underdress + (Pointed poulaines:1.5)"
+        },
+        {
+            "general": "Quilted gambeson under a split wool tunic with leather bracers",
+            "close_up": "Quilted gambeson stitching and bracer buckle detail",
+            "half_body": "Gambeson + Wool tunic",
+            "full_body": "Gambeson + Tunic + (Soft leather boots:1.5)"
+        },
+        {
+            "general": "Hooded woolen cloak over a belted kirtle with a leather pouch",
+            "close_up": "Cloak hood seam and pewter cloak pin detail",
+            "half_body": "Cloak + Kirtle + Pouch",
+            "full_body": "Cloak + Kirtle + Pouch + (Leather turnshoes:1.5)"
+        },
+        {
+            "general": "Wool houppelande with contrasting silk lining and padded funnel sleeves",
+            "close_up": "Funnel sleeve cuff with silk piping and decorative buttons",
+            "half_body": "Houppelande silhouette",
+            "full_body": "Houppelande silhouette + (Button front ankle boots:1.5)"
+        }
+    ],
+    "1950s": [
+        {
+            "general": "Fit and flare polka  dot midi dress with cinched waist and petticoat underlay",
+            "close_up": "Tailored bodice with mid  calf skirt flare supported by petticoat",
+            "half_body": "Polka dot midi dress silhouette",
+            "full_body": "Polka dot midi dress silhouette + (Pointed  toe slingback pumps:1.5)"
+        },
+        {
+            "general": "Stand collar blouse with subtle V  neck and below  knee pencil skirt",
+            "close_up": "Stand collar neckline with fitted waist seam",
+            "half_body": "Stand collar blouse + Knee  length pencil skirt",
+            "full_body": "Blouse + Pencil skirt + (Slingback pumps:1.5)"
+        },
+        {
+            "general": "Floral tea dress with peplum waist detail and flared hem",
+            "close_up": "Structured bodice with lace trim and peplum accent",
+            "half_body": "Peplum tea dress silhouette",
+            "full_body": "Tea dress silhouette + (Low  profile patent leather pumps:1.5)"
+        },
+        {
+            "general": "Cropped bolero cardigan over sweetheart  neck swing dress",
+            "close_up": "Sweetheart neckline with bolero overlay detail",
+            "half_body": "Bolero cardigan + Sweetheart neck dress",
+            "full_body": "Bolero + Sweetheart  neck dress + (Patent leather slingbacks:1.5)"
+        },
+        {
+            "general": "Pussy bow blouse with pleated mid  calf skirt",
+            "close_up": "Neck tie bow and fitted blouse bodice",
+            "half_body": "Pussy bow blouse + Pleated midi skirt",
+            "full_body": "Blouse + Pleated skirt + (Pointed  toe pumps:1.5)"
+        },
+        {
+            "general": "Structured sheath dress with cap sleeves and belted waist",
+            "close_up": "Clean neckline with fitted belt accent",
+            "half_body": "Sheath dress silhouette",
+            "full_body": "Sheath dress silhouette + (Classic slingback heels:1.5)"
+        }
+    ],
+    "Movie style": [
+        {
+            "general": "Femme fatale trench coat over a tailored pencil skirt with dramatic gloves",
+            "close_up": "Trench coat lapel and leather glove cuff detail",
+            "half_body": "Trench coat + Tailored pencil skirt",
+            "full_body": "Trench coat + Tailored pencil skirt + (Pointed  toe slingback pumps:1.5)"
+        },
+        {
+            "general": "Metallic bomber jacket layered atop a holographic bodysuit",
+            "close_up": "Bomber jacket zipper and holographic seam panels",
+            "half_body": "Bomber jacket + Holographic bodysuit",
+            "full_body": "Bomber jacket + Holographic bodysuit + (Futuristic platform boots:1.5)"
+        },
+        {
+            "general": "Suede fringe jacket with distressed denim and bandana accent",
+            "close_up": "Fringe trim and bandana knot detail",
+            "half_body": "Fringe jacket + Distressed denim jeans",
+            "full_body": "Fringe jacket + Distressed denim jeans + (Cowboy boots:1.5)"
+        },
+        {
+            "general": "Floral wrap dress paired with a soft knit cardigan",
+            "close_up": "Wrap tie detail and cardigan knit texture",
+            "half_body": "Floral wrap dress + Knit cardigan",
+            "full_body": "Floral wrap dress + Knit cardigan + (Ballet flats:1.5)"
+        },
+        {
+            "general": "Tactical utility jumpsuit with harness and zipper accents",
+            "close_up": "Harness straps and front zipper detailing",
+            "half_body": "Utility jumpsuit + Tactical harness",
+            "full_body": "Utility jumpsuit + Tactical harness + (Combat boots:1.5)"
+        },
+        {
+            "general": "Embroidered leather corset with a flowing velvet cloak",
+            "close_up": "Corset stitching and cloak embroidery detail",
+            "half_body": "Leather corset + Velvet cloak",
+            "full_body": "Leather corset + Velvet cloak + (Laced leather boots:1.5)"
+        },
+        {
+            "general": "High neck lace gown with dramatic puff sleeves",
+            "close_up": "Lace neckline and structured puff sleeve detail",
+            "half_body": "Lace gown bodice + Puff sleeves",
+            "full_body": "Lace gown bodice + Puff sleeves + (Platform Victorian boots:1.5)"
+        },
+        {
+            "general": "Beaded fringe dress with dropped waist silhouette",
+            "close_up": "Beadwork pattern and fringe movement",
+            "half_body": "Beaded fringe dress silhouette",
+            "full_body": "Beaded fringe dress silhouette + (T  strap heels:1.5)"
+        },
+        {
+            "general": "Sleek sheath dress with concealed holster belt",
+            "close_up": "Holster seam and seam  dart detail",
+            "half_body": "Sheath dress + Concealed holster belt",
+            "full_body": "Sheath dress + Concealed holster belt + (Stiletto pumps:1.5)"
+        },
+        {
+            "general": "Distressed leather jacket with cargo pants and aviator goggles",
+            "close_up": "Jacket distressing and goggle strap detail",
+            "half_body": "Leather jacket + Cargo pants",
+            "full_body": "Leather jacket + Cargo pants + (Rugged combat boots:1.5)"
+        },
+        {
+            "general": "Color block jumpsuit with cinched waist and bold belt",
+            "close_up": "Belt buckle detail and panel seam lines",
+            "half_body": "Color  block jumpsuit silhouette",
+            "full_body": "Color  block jumpsuit silhouette + (Bold heeled boots:1.5)"
+        },
+        {
+            "general": "Sequin bodice top with layered tulle skirt",
+            "close_up": "Sequin pattern and tulle layer detail",
+            "half_body": "Sequin top + Tulle skirt",
+            "full_body": "Sequin top + Tulle skirt + (Strappy stage heels:1.5)"
+        }
+    ],
+    "Pin Up Style": [
+        {
+            "general": "Sweetheart lace halter bustier top with defined cups and high waisted pencil skirt with kick pleat",
+            "close_up": "Lace  trimmed sweetheart neckline and underwired cup detail",
+            "half_body": "Halter bustier top + High waisted pencil skirt",
+            "full_body": "Halter bustier top + Pencil skirt + (Pointed  toe slingback pumps:1.5)"
+        },
+        {
+            "general": "Structured off shoulder ruffle bustier top with boned panels and tailored high  waisted shorts",
+            "close_up": "Ruffle neckline with boned bust support",
+            "half_body": "Off shoulder bustier top + Tailored shorts",
+            "full_body": "Bustier top + Tailored shorts + (T strap peep toe heels:1.5)"
+        },
+        {
+            "general": "Sweetheart balconette bustier crop top with supportive underwire and full circle midi skirt",
+            "close_up": "Balconette cups with contrast piping and satin straps",
+            "half_body": "Balconette crop top + Full circle skirt",
+            "full_body": "Crop top + Circle skirt + (T strap slingback pumps:1.5)"
+        },
+        {
+            "general": "Structured balconette corset top with knotted bandana headband and lined swing skirt",
+            "close_up": "Corset seams with metal busk front and bandana knot detail",
+            "half_body": "Corset top + Swing skirt",
+            "full_body": "Corset top + Swing skirt + (Peep  toe slingbacks:1.5)"
+        },
+        {
+            "general": "One piece ruched swimsuit with side ruching and low block  heel sandals",
+            "close_up": "Ruche panels with adjustable halter straps",
+            "half_body": "One  piece swimsuit silhouette",
+            "full_body": "Swimsuit + (Low block  heel sandals:1.5)"
+        },
+        {
+            "general": "Midi wrap dress with hidden snap closures, cap sleeves, and flared skirt",
+            "close_up": "Surplice bodice with concealed snaps at the waist",
+            "half_body": "Wrap dress silhouette",
+            "full_body": "Wrap dress + (Ankle  strap slingback pumps:1.5)"
+        }
+    ],
+    "Night Club": [
+        {
+            "general": "Bandeau sequin crop top with a sweetheart neckline and adjustable straps",
+            "close_up": "Sequin bandeau top with clean edge finish and strap hardware detail",
+            "half_body": "Sequin bandeau top + High waisted vinyl mini skirt",
+            "full_body": "Bandeau top + Vinyl mini skirt + (Strappy stiletto sandals:1.5)"
+        },
+        {
+            "general": "Asymmetrical off shoulder bodysuit with a single long sleeve",
+            "close_up": "Clean neckline with asymmetrical sleeve seam detail",
+            "half_body": "Off  shoulder bodysuit + Faux  leather skinny pants",
+            "full_body": "Bodysuit + Skinny pants + (Pointed  toe ankle  strap heels:1.5)"
+        },
+        {
+            "general": "Long  sleeve mesh crop top layered over a metallic bralette",
+            "close_up": "Mesh panel seam with metallic bralette edge detail",
+            "half_body": "Mesh crop top + High  waisted sequin bodycon skirt",
+            "full_body": "Mesh top + Sequin skirt + (Clear  strap block heels:1.5)"
+        },
+        {
+            "general": "Satin slip dress with a thigh  high side slit and cowl neckline",
+            "close_up": "Cowl neckline drape and slit hem detail",
+            "half_body": "Slip dress silhouette",
+            "full_body": "Slip dress + (Strappy heeled sandals:1.5)"
+        },
+        {
+            "general": "Faux  leather bralette with cut  out accents paired with cargo pants",
+            "close_up": "Bralette cut  out panel and gusset stitching detail",
+            "half_body": "Leather bralette + Tailored cargo pants",
+            "full_body": "Bralette + Cargo pants + (Lace  up platform boots:1.5)"
+        },
+        {
+            "general": "Ruched metallic mini dress with twisted front detail",
+            "close_up": "Twist  front seam and ruched side panel detail",
+            "half_body": "Metallic mini dress silhouette",
+            "full_body": "Mini dress silhouette + (Clear platform heels:1.5)"
+        }
+    ],
+    "Summer": [
+        {
+            "general": "Smocked midi sundress with adjustable straps and A  line skirt",
+            "close_up": "Smocked bodice with cinch detail and strap adjusters",
+            "half_body": "Smocked sundress silhouette",
+            "full_body": "Smocked sundress silhouette + (Espadrille wedge sandals:1.5)"
+        },
+        {
+            "general": "Slub knit V neck tee half  tucked into high  rise linen shorts",
+            "close_up": "V neck tee with slub texture and partial tuck detail",
+            "half_body": "Slub V neck tee + High rise linen shorts",
+            "full_body": "Slub V neck tee + Linen shorts + (Leather slide sandals:1.5)"
+        },
+        {
+            "general": "Cropped poplin button up with paperbag  waist cotton shorts",
+            "close_up": "Cropped hem and gathered paperbag waist detail",
+            "half_body": "Cropped button up + Paperbag waist shorts",
+            "full_body": "Cropped button up + Paperbag shorts + (Strappy block  heel sandals:1.5)"
+        },
+        {
+            "general": "Flowy crepe cami paired with pleated culotte trousers",
+            "close_up": "Cami neckline with delicate gathering and pleat detail",
+            "half_body": "Crepe cami + Pleated culottes",
+            "full_body": "Crepe cami + Pleated culottes + (Mid  heel ankle  strap sandals:1.5)"
+        },
+        {
+            "general": "Off  shoulder ruffle top with elastic waist and tailored Bermuda shorts",
+            "close_up": "Ruffle neckline with elasticized waist seam",
+            "half_body": "Ruffle top + Bermuda shorts",
+            "full_body": "Ruffle top + Bermuda shorts + (Woven platform sandals:1.5)"
+        },
+        {
+            "general": "Tiered cotton poplin maxi skirt with tucked  in sleeveless blouse",
+            "close_up": "Tiered skirt seam and blouse tuck detail",
+            "half_body": "Blouse + Tiered maxi skirt",
+            "full_body": "Blouse + Tiered maxi skirt + (Ankle  strap heeled sandals:1.5)"
+        }
+    ],
+    "Vampire": [
+        {
+            "general": "Gothic Victorian gown with high lace collar, red satin underlayer, and velvet bustle skirt",
+            "close_up": "High lace collar backed in red satin with embroidered fleur  de  lis motifs",
+            "half_body": "Lace  collared bodice + Velvet bustle skirt",
+            "full_body": "Victorian gown + Velvet bustle skirt + (Pointed  toe lace  up Victorian boots:1.5)"
+        },
+        {
+            "general": "Tailored leather blazer with velvet lapels, crimson satin lining, and gothic embroidery",
+            "close_up": "Velvet lapel with crimson satin lining and silver embroidery detail",
+            "half_body": "Leather blazer + Faux  leather pencil skirt",
+            "full_body": "Blazer + Pencil skirt + (Heeled lace  up ankle boots:1.5)"
+        },
+        {
+            "general": "Underbust power  mesh corset with boned seams, sheer lace sleeves, and detachable chiffon bustle",
+            "close_up": "Corset boning detail with lace overlay and chiffon bustle ties",
+            "half_body": "Power mesh corset + Layered chiffon bustle skirt",
+            "full_body": "Corset + Chiffon skirt + (Pointed vamp boots:1.5)"
+        },
+        {
+            "general": "Velvet tailcoat blazer with satin lapels, pewter hardware, and silk cravat",
+            "close_up": "Satin lapel with ornate pewter clasp and cravat knot detail",
+            "half_body": "Velvet blazer + Slim  fit trousers",
+            "full_body": "Blazer + Trousers + (Victorian  style button front boots:1.5)"
+        },
+        {
+            "general": "Off  shoulder velvet maxi dress with boned bustier bodice and detachable lace shawl",
+            "close_up": "Boned velvet bodice with removable lace shawl hook detail",
+            "half_body": "Bustier bodice + Shawl drape",
+            "full_body": "Velvet maxi dress + Lace shawl + (Stiletto lace  up boots:1.5)"
+        },
+        {
+            "general": "Embroidered lace mesh top with detachable bat  wing overlay and coated leather leggings",
+            "close_up": "Lace mesh embroidery and bat  wing hem detail",
+            "half_body": "Mesh top + Coated leather leggings",
+            "full_body": "Mesh top + Leather leggings + (Platform heeled boots with studs:1.5)"
+        }
+    ],
+    "Rock Chick": [
+        {
+            "general": "Distressed band tee layered under a studded leather moto jacket with zip hardware",
+            "close_up": "Moto jacket lapel with stud and zipper detail",
+            "half_body": "Moto jacket + Distressed skinny jeans",
+            "full_body": "Moto jacket + Distressed skinny jeans + (Studded lug  sole combat boots:1.5)"
+        },
+        {
+            "general": "Asymmetrical zip leather jacket over a vintage band tee and coated black denim shorts",
+            "close_up": "Asymmetrical zipper detail and smooth leather texture",
+            "half_body": "Leather jacket + Coated denim shorts",
+            "full_body": "Leather jacket + Coated denim shorts + (Chunky platform ankle boots:1.5)"
+        },
+        {
+            "general": "Long  sleeve mesh top with studded bralette accent and high  waisted leather leggings",
+            "close_up": "Studded bralette strap and reinforced mesh seam",
+            "half_body": "Mesh top + Leather leggings",
+            "full_body": "Mesh top + Leather leggings + (Metal  buckled platform boots:1.5)"
+        },
+        {
+            "general": "Cropped studded denim vest over a lace  inset bodysuit with skinny black jeans",
+            "close_up": "Denim vest stud and lace inset detail",
+            "half_body": "Studded vest + Skinny jeans",
+            "full_body": "Studded vest + Skinny jeans + (Oxblood platform Doc Martens:1.5)"
+        },
+        {
+            "general": "Off  shoulder distressed knit top paired with a leather mini skirt and fishnet tights",
+            "close_up": "Raw edge sleeve and fishnet texture detail",
+            "half_body": "Off shoulder top + Leather mini skirt",
+            "full_body": "Off shoulder top + Leather mini skirt + (Chunky heeled combat boots:1.5)"
+        },
+        {
+            "general": "Plaid flannel shirt tied at the waist over a graphic mesh crop top and ripped straight  leg jeans",
+            "close_up": "Flannel tie  waist knot and mesh crop overlay detail",
+            "half_body": "Flannel shirt + Ripped straight  leg jeans",
+            "full_body": "Flannel shirt + Ripped jeans + (Studded heeled ankle boots:1.5)"
+        }
+    ],
+    "LOTR": [
+        {
+            "general": "Ceremonial Elven gown in layered chiffon over a silk underdress with silver  leaf embroidery",
+            "close_up": "Silver  thread leaf motifs along the chiffon neckline and sleeve hems",
+            "half_body": "Chiffon overdress + Silk underdress bodice",
+            "full_body": "Elven gown ensemble + (Flat leather ankle boots embossed with leaf motifs:1.5)"
+        },
+        {
+            "general": "Dúnedain Ranger outfit with distressed leather jerkin, hooded woolen cloak, and linen shirt",
+            "close_up": "Distressed leather jerkin with subtle burnished seams",
+            "half_body": "Leather jerkin + Linen shirt + Hooded cloak",
+            "full_body": "Ranger ensemble + (Mid  calf weathered travel boots:1.5)"
+        },
+        {
+            "general": "Númenórean royal velvet gown with silver  filigree bodice and fur  trimmed cloak",
+            "close_up": "Silver  filigree embroidery on the fitted velveteen bodice",
+            "half_body": "Velvet gown bodice + Fur  trimmed cloak",
+            "full_body": "Royal velvet ensemble + (Soft  soled leather boots:1.5)"
+        },
+        {
+            "general": "Rustic traveler’s tunic: undyed linen kirtle, leather belt, woolen cloak, and breeches",
+            "close_up": "Handwoven linen fabric with simple overcast stitching",
+            "half_body": "Linen kirtle + Woolen cloak",
+            "full_body": "Traveler’s outfit + (Wrap  around leather gaiters:1.5)"
+        },
+        {
+            "general": "Shire inspired outfit: gathered linen shirt, knee  length breeches, and leather moccasins",
+            "close_up": "Gathered collar detail on the linen shirt with wooden toggle",
+            "half_body": "Linen shirt + Breeches",
+            "full_body": "Hobbit ensemble + (Soft leather moccasins:1.5)"
+        },
+        {
+            "general": "Elven warrior attire: engraved leather cuirass, silk under  tunic, flowing cape, and fitted breeches",
+            "close_up": "Engraved leaf filigree on cuirass and silver clasp on cape",
+            "half_body": "Leather cuirass + Silk under  tunic",
+            "full_body": "Warrior ensemble + (Soft leather greave boots:1.5)"
+        }
+    ],
+    "Fantasy Princess": [
+        {
+            "general": "Corseted lace bodice gown with structured waist seam, layered chiffon skirt, and jeweled sash",
+            "close_up": "Boned lace bodice with hidden corset busk and crystal  trimmed satin sash",
+            "half_body": "Lace corset bodice + A line chiffon skirt",
+            "full_body": "Corset gown + Petticoat layers + (Jeweled satin pumps:1.5)"
+        },
+        {
+            "general": "Velvet trimmed velvet bodice dress with peplum waist, tulle underskirt, and gemstone belt",
+            "close_up": "Velvet peplum waist with inset gemstone buckle detail",
+            "half_body": "Velvet bodice + Tulle peplum overskirt",
+            "full_body": "Peplum gown + Hoop petticoat + (Embellished low  block heels:1.5)"
+        },
+        {
+            "general": "Satin and organza ball gown with boned basque bodice, gem  encrusted center panel, and multi  tier skirt",
+            "close_up": "Basque bodice with gem encrusted central motif and boning seams",
+            "half_body": "Boned basque bodice + Tiered organza skirt",
+            "full_body": "Ball gown + Hoop skirt + (Metallic crystal heels:1.5)"
+        },
+        {
+            "general": "Off shoulder corset dress with layered tulle sleeves, jeweled waistband, and cascading overskirt",
+            "close_up": "Off shoulder corseted neckline with detachable tulle ruffle and jeweled trim",
+            "half_body": "Off shoulder corset + Cascading overskirt",
+            "full_body": "Corset dress + Petticoat + (Embellished ankle  strap heels:1.5)"
+        },
+        {
+            "general": "Lace trimmed cascading ruffle gown with defined basque bodice and ribbon belt",
+            "close_up": "Basque waist with ribbon belt and lace ruffle cascade detail",
+            "half_body": "Basque bodice + Cascading ruffle skirt",
+            "full_body": "Ruffle gown + Underskirt support + (Kitten  heel Mary Janes:1.5)"
+        },
+        {
+            "general": "Fitted satin corset top paired with voluminous tulle skirt, ornate tiara, and pearl  drop accessories",
+            "close_up": "Satin corset with pearl embroidery and crystal clasps",
+            "half_body": "Satin corset + Voluminous tulle skirt",
+            "full_body": "Princess ensemble + Hoop petticoat + (Pearl  embellished heels:1.5)"
+        }
+    ],
+    "Urban Safari": [
+        {
+            "general": "UPF rated moisture  wicking safari shirt with roll  up sleeves and secure zip chest pockets",
+            "close_up": "Zip closure chest pocket and sleeve tab detail on technical shirt fabric",
+            "half_body": "Safari shirt + Convertible zip  off cargo pants",
+            "full_body": "Safari shirt + Zip  off cargo pants + (Mid  cut lug  sole desert boots:1.5)"
+        },
+        {
+            "general": "Packable soft  shell safari jacket with articulated elbows and mesh underarm vents",
+            "close_up": "Articulated elbow seam and mesh vent detail on jacket",
+            "half_body": "Soft shell jacket + Stretch utility pants",
+            "full_body": "Soft shell jacket + Utility pants + (Hybrid trail sneakers:1.5)"
+        },
+        {
+            "general": "Merino blend quarter  zip sweater with thumb  loop cuffs and ergonomic seams",
+            "close_up": "Quarter zip placket and thumb  loop cuff detail on knit",
+            "half_body": "Merino quarter  zip + Tapered cargo chinos",
+            "full_body": "Quarter zip sweater + Cargo chinos + (Low  profile waterproof ankle boots:1.5)"
+        },
+        {
+            "general": "Lightweight technical vest with multiple streamlined pockets over a hooded sun  shirt",
+            "close_up": "Streamlined vest pocket and sun  shirt hood seam detail",
+            "half_body": "Utility vest + Hooded sun  shirt",
+            "full_body": "Utility vest + Sun  shirt + (Sleek outdoor chukka boots:1.5)"
+        },
+        {
+            "general": "Stretch cotton blend field shirt with contrast stitching and roll  tab sleeves",
+            "close_up": "Contrast stitch detail and roll  tab sleeve fastener",
+            "half_body": "Field shirt + Tapered cargo chinos",
+            "full_body": "Field shirt + Cargo chinos + (Lug  sole desert boots:1.5)"
+        },
+        {
+            "general": "Quick dry henley with UV protection paired with convertible utility shorts",
+            "close_up": "Henley button placket and zip  off short hem detail",
+            "half_body": "Quick  dry henley + Convertible utility shorts",
+            "full_body": "Henley + Utility shorts + (Mid  height waterproof chukka boots:1.5)"
+        }
+    ],
+    "Retro futuristic": [
+        {
+            "general": "Matte iridescent bomber jacket with integrated LED piping and geo  panel seams",
+            "close_up": "LED  piped seam detail and geo  panel stitch accents",
+            "half_body": "Iridescent bomber + Tech cargo pants with zip  fly and knee panels",
+            "full_body": "Iridescent bomber + Cargo pants + (Metallic  mesh sock sneakers:1.5)"
+        },
+        {
+            "general": "Neoprene asymmetrical top with brushed  metal panels and magnetic closures",
+            "close_up": "Magnetic snap detail and brushed  metal panel inset",
+            "half_body": "Asym top + High  waisted panel  line trousers",
+            "full_body": "Asym top + Panel trousers + (Chrome  cap ankle boots:1.5)"
+        },
+        {
+            "general": "Tailored zip front jumpsuit with retro piping, utility belt, and tapered legs",
+            "close_up": "Hidden front zip with contrast piping and belt D  ring",
+            "half_body": "Zip  front jumpsuit silhouette",
+            "full_body": "Jumpsuit + (Futuristic wedge moto boots:1.5)"
+        },
+        {
+            "general": "Layered techno mesh top with luminescent thread over neon compression tee",
+            "close_up": "Mesh weave with luminescent fiber and bonded cuff seams",
+            "half_body": "Mesh top + Neon compression tee and reflective track pants",
+            "full_body": "Layered mesh + Track pants + (Mirror  finish high  tops:1.5)"
+        },
+        {
+            "general": "Pleated holographic skater skirt with neoprene waistband and panel overlays",
+            "close_up": "Holographic pleat fold detail and neoprene panel inset",
+            "half_body": "Neoprene crop top + Holographic skater skirt",
+            "full_body": "Crop top + Skater skirt + (Anodized platform combat boots:1.5)"
+        },
+        {
+            "general": "Dual tone windbreaker with hidden zip vents and contrast  color lining",
+            "close_up": "Zip vent underarm detail and taped contrast lining",
+            "half_body": "Windbreaker + Bonded jogger pants with reflective tape",
+            "full_body": "Windbreaker + Joggers + (Sleek hybrid runner sneakers:1.5)"
+        }
+    ],
+    "Cyberpunk": [
+        {
+            "general": "LED laced moto jacket with interlocking panel seams and reflective trim",
+            "close_up": "LED trim and laser  etched seam detail",
+            "half_body": "Moto jacket + Welded  seam utility pants",
+            "full_body": "Moto jacket + Utility pants + (Integrated LED combat boots:1.5)"
+        },
+        {
+            "general": "Modular circuit  embedded bodysuit with magnetic snap closures and utility harness",
+            "close_up": "Circuit  print fabric with magnetic buckle detail",
+            "half_body": "Circuit bodysuit + Modular harness",
+            "full_body": "Bodysuit + Harness + (Carbon  fiber sole ankle boots:1.5)"
+        },
+        {
+            "general": "Neon panel asymmetrical jacket with brushed  chrome accents and zip vents",
+            "close_up": "Chrome panel inset with neon piping",
+            "half_body": "Asymmetrical jacket + Panel  crease trousers",
+            "full_body": "Jacket + Trousers + (Reactive  soled platform boots:1.5)"
+        },
+        {
+            "general": "Graffiti print tech hoodie with adjustable hem and bonded  seam joggers",
+            "close_up": "Neon graffiti print with bonded seam detail",
+            "half_body": "Tech hoodie + Bonded joggers",
+            "full_body": "Hoodie + Joggers + (Magnetic  latch urban boots:1.5)"
+        },
+        {
+            "general": "Strap on tech vest with quick  release buckles and reflective webbing",
+            "close_up": "Quick release buckle and reflective strap detail",
+            "half_body": "Tech vest + Thermal  reg cargo pants",
+            "full_body": "Vest + Cargo pants + (Micro  lace combat boots:1.5)"
+        },
+        {
+            "general": "Reflective memory  fabric cutout top with neon underlays and articulated cybertrousers",
+            "close_up": "Reflective panel with neon underlay detail",
+            "half_body": "Cutout top + Articulated trousers",
+            "full_body": "Top + Trousers + (Nanotech runway boots:1.5)"
+        }
+    ],
+    "Streetwear": [
+        {
+            "general": "Oversized graphic hoodie with all  over abstract print and drop  shoulder silhouette",
+            "close_up": "Abstract print on garment  dyed fleece with distressed edge detailing",
+            "half_body": "Graphic hoodie + Tech  fleece tapered joggers",
+            "full_body": "Graphic hoodie + Tech  fleece tapered joggers + (Chunky EVA  sole sneakers:1.5)"
+        },
+        {
+            "general": "Baggy statement tee half  tucked into slim  straight distressed denim",
+            "close_up": "Soft washed tee fabric and controlled knee  rip details on denim",
+            "half_body": "Statement tee + Slim  straight distressed jeans",
+            "full_body": "Statement tee + Slim  straight distressed jeans + (Low  profile high  top sneakers:1.5)"
+        },
+        {
+            "general": "Cropped nylon bomber with contrast geo panels over a layered longline tee",
+            "close_up": "Contrast panel stitching and YKK zip hardware",
+            "half_body": "Bomber jacket + Tapered tech pants",
+            "full_body": "Bomber jacket + Tapered tech pants + (Slim skate shoes:1.5)"
+        },
+        {
+            "general": "Premium fleece sweatshirt with minimalist logo and hidden zip pocket",
+            "close_up": "Subtle embroidered logo and concealed zip detail",
+            "half_body": "Fleece sweatshirt + Streamlined cargo trousers",
+            "full_body": "Fleece sweatshirt + Cargo trousers + (Retro runner sneakers:1.5)"
+        },
+        {
+            "general": "Color block windbreaker with taped seams and adjustable hem",
+            "close_up": "Taped seam detail and contrast  color lining",
+            "half_body": "Windbreaker + Cuffed performance joggers",
+            "full_body": "Windbreaker + Cuffed performance joggers + (Laceless high  tops:1.5)"
+        },
+        {
+            "general": "Layered longline tee with raw  hem finish over slim  tech jeans",
+            "close_up": "Raw  cut hem and reinforced side  seam detail",
+            "half_body": "Longline tee + Slim  tech denim",
+            "full_body": "Longline tee + Slim  tech denim + (Sock  fit urban high  tops:1.5)"
+        }
+    ],
+    "Bohemian Chic": [
+        {
+            "general": "Maxi dress with ethnic prints, delicate embroidery, braided leather waist belt and breezy silhouette",
+            "close_up": "Braided leather belt threaded through embroidered waist seam",
+            "half_body": "Maxi dress silhouette + Braided belt",
+            "full_body": "Maxi dress + Braided belt + (Ankle  strap wedge espadrilles:1.5)"
+        },
+        {
+            "general": "Peasant blouse with lace  trim ruffled sleeves, half  tuck styling and woven belt",
+            "close_up": "Lace ruffle sleeve hems and belt loop detail",
+            "half_body": "Peasant blouse half  tucked + Tiered midi skirt",
+            "full_body": "Peasant blouse + Tiered midi skirt + Woven belt + (Low  block heel sandals:1.5)"
+        },
+        {
+            "general": "Printed kimono with lightweight drape, obi  style tie and cropped wide  leg linen trousers",
+            "close_up": "Obi tie waist detail and vibrant print on soft fabric",
+            "half_body": "Kimono + Tank top + Cropped wide  leg linen trousers",
+            "full_body": "Kimono + Linen trousers + (Multi  strap gladiator sandals:1.5)"
+        },
+        {
+            "general": "Lace lined crop top with elastic hem, high  waisted flowing midi skirt and festival flair",
+            "close_up": "Lined lace bodice with elasticized hem detail",
+            "half_body": "Lace crop top + High  waisted midi skirt",
+            "full_body": "Crop top + Midi skirt + (Platform wedge espadrilles:1.5)"
+        },
+        {
+            "general": "Embroidered tunic with fringe accents, cinched waist and cropped linen pants",
+            "close_up": "Fringe trim and embroidered yoke with waist cinch detail",
+            "half_body": "Tunic + Cropped wide  leg linen pants",
+            "full_body": "Tunic + Linen pants + (Braided  strap platform sandals:1.5)"
+        },
+        {
+            "general": "Floral wrap dress with midi length, concealed snaps, braided belt and ruffle hem",
+            "close_up": "Surplice wrap with hidden snap closures and ruffle edge",
+            "half_body": "Wrap dress silhouette + Braided belt",
+            "full_body": "Wrap dress + Braided belt + (Ankle  strap wedge sandals:1.5)"
+        }
+    ],
+    "Winter Wonderland": [
+        {
+            "general": "Oversized wool  blend turtleneck sweater with braided leather belt and high  waist insulated trousers",
+            "close_up": "Braided belt threading through sweater waist seam and thermal trouser fabric detail",
+            "half_body": "Turtleneck sweater + Insulated high  waist trousers",
+            "full_body": "Sweater + Trousers + (Waterproof lug  sole ankle boots:1.5)"
+        },
+        {
+            "general": "Mid thigh belted wool coat with removable faux  fur collar, worn over cashmere turtleneck and lined slim trousers",
+            "close_up": "Faux fur collar attachment detail and covered button placket",
+            "half_body": "Wool coat + Cashmere turtleneck",
+            "full_body": "Coat + Turtleneck + Lined trousers + (Insulated block  heel boots:1.5)"
+        },
+        {
+            "general": "Fleece lined belted parka with storm  flap hood over a merino mid  layer and softshell cargo pants",
+            "close_up": "Storm flap and fleece lining peek detail at hood and zip cuff",
+            "half_body": "Parka + Merino mid layer",
+            "full_body": "Parka + Cargo pants + (Snow  grip winter boots:1.5)"
+        },
+        {
+            "general": "Merino blend quarter zip sweater under a packable down vest, paired with coated stretch jeans",
+            "close_up": "Quarter zip placket and down vest baffle stitching detail",
+            "half_body": "Sweater + Down vest",
+            "full_body": "Sweater + Vest + Coated jeans + (Heated waterproof ankle boots:1.5)"
+        },
+        {
+            "general": "Layered flannel shirt under a quilted technical vest and waterproof shell, teamed with fleece  backed jeans",
+            "close_up": "Concealed zip pocket on vest and taped seam on shell",
+            "half_body": "Flannel shirt + Quilted vest + Shell jacket",
+            "full_body": "Flannel + Vest + Jeans + (Waterproof traction boots:1.5)"
+        },
+        {
+            "general": "Ribbed knit midi dress with built  in thermal lining, teamed with opaque thermal tights and a structured belted coat",
+            "close_up": "Thermal lining hem and coat belt buckle detail",
+            "half_body": "Knit dress + Thermal tights",
+            "full_body": "Dress + Belted coat + (Knee  high insulated boots:1.5)"
+        }
+    ],
+    "Steampunk": [
+        {
+            "general": "Underbust leather corset embossed with brass gear motifs over a high  collar lace blouse and tiered bustle skirt",
+            "close_up": "Embossed brass gear motifs on corset panels and stitched leather seams",
+            "half_body": "Corset + Lace blouse + Bustle skirt",
+            "full_body": "Corset + Lace blouse + Bustle skirt + (Lace  up leather ankle boots:1.5)"
+        },
+        {
+            "general": "Tailored wool waistcoat with brass button details layered over a ruffled shirt and slim pocket  watch  chain trousers",
+            "close_up": "Brass button detailing and chain fob clipped to waistcoat pocket",
+            "half_body": "Waistcoat + Ruffled shirt + Trousers with chain",
+            "full_body": "Waistcoat + Ruffled shirt + Trousers + (Mid  calf carriage boots with brass eyelets:1.5)"
+        },
+        {
+            "general": "Brocade tailcoat with brass piping over a lace jabot blouse and asymmetrical leather strap skirt",
+            "close_up": "Brass piping along tailcoat lapels and leather strap buckle detail",
+            "half_body": "Tailcoat + Jabot blouse + Strap skirt",
+            "full_body": "Tailcoat + Jabot blouse + Strap skirt + (Knee  high riding boots:1.5)"
+        },
+        {
+            "general": "Multi pocket leather utility vest over a puff  sleeve blouse and high  waisted lace  trimmed skirt",
+            "close_up": "Utility vest pocket hardware and lace trim detail on skirt",
+            "half_body": "Utility vest + Puff  sleeve blouse + Lace  trim skirt",
+            "full_body": "Utility vest + Puff  sleeve blouse + Lace  trim skirt + (Buckled leather platform boots:1.5)"
+        },
+        {
+            "general": "Velvet peplum jacket with gear brooch over a corseted peplum top and layered tulle underskirt",
+            "close_up": "Gear  shaped brooch and velvet jacket lapel detail",
+            "half_body": "Peplum jacket + Corset top + Tulle underskirt",
+            "full_body": "Peplum jacket + Corset top + Tulle underskirt + (Velvet  trimmed lace  up boots:1.5)"
+        },
+        {
+            "general": "High neck satin corset dress with gear  embossed belt and cascading organza overskirt",
+            "close_up": "Gear embossed belt buckle and organza ruffle detail",
+            "half_body": "Satin corset dress silhouette",
+            "full_body": "Satin corset dress + Organza overskirt + (Button  front leather boots:1.5)"
+        }
+    ]
+}

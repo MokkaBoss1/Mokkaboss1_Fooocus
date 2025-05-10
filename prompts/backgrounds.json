@@ -1,0 +1,178 @@
+{
+  "General": [
+    "Random",
+    "None",
+    "Abstract art background",
+    "Patterned texture background",
+    "Minimalist design background",
+    "Vintage style background"
+  ],
+  "Mountains and Hills": [
+    "Mountains background",
+    "Plateaus background",
+    "Canyons background",
+    "Cliffs background",
+    "Volcanoes background",
+    "Hills with rolling mists background"
+  ],
+  "Flatlands and Valleys": [
+    "Valleys background",
+    "Plains background",
+    "Deserts background",
+    "Grasslands background",
+    "Savannas background",
+    "Taigas background"
+  ],
+  "Wetlands and Water Bodies": [
+    "Lakes background",
+    "Rivers background",
+    "Waterfalls background",
+    "Oceans background",
+    "Coral reefs background",
+    "Icebergs background"
+  ],
+  "Types of Forests": [
+    "Forests background",
+    "Rainforests background",
+    "Tundras background",
+    "Swamps background",
+    "Marshes background",
+    "Snow-covered forest background"
+  ],
+  "Islands and Coasts": [
+    "Tropical islands background",
+    "Archipelagos background",
+    "Desert oasis with palm trees background",
+    "Rocky coastline background",
+    "Seaside cliffs background",
+    "Pebble beach background"
+  ],
+  "Urban Views": [
+    "City skyline background",
+    "Bridge background",
+    "Highway interchange background",
+    "Skyscraper background",
+    "Apartment balcony with city views background",
+    "Urban street art background"
+  ],
+  "Parks and Gardens": [
+    "Urban park background",
+    "Botanical garden background",
+    "Amusement park background",
+    "Street market background",
+    "Fountain in a public square background",
+    "Rooftop garden background"
+  ],
+  "Residential and Commercial Areas": [
+    "Residential neighborhood background",
+    "Shopping mall background",
+    "Office complex background",
+    "Industrial area background",
+    "Convention center background",
+    "Seaport background"
+  ],
+  "Landmarks and Structures": [
+    "Historical landmark background",
+    "Castle ruins background",
+    "Medieval fortress background",
+    "Dam background",
+    "Canal background",
+    "Aqueduct background"
+  ],
+  "Sports and Adventure": [
+    "Sports stadium background",
+    "Hot air balloon basket background",
+    "Ski resort background",
+    "Horse stable background",
+    "Rock climbing gym background",
+    "BMX skate park background"
+  ],
+  "Gardens and Fields": [
+    "Farm with rolling fields background",
+    "Orchard in bloom background",
+    "Vineyard with grapevines background",
+    "Wildflower meadow background",
+    "Lavender field background",
+    "Tulip field background"
+  ],
+  "Theme Parks and Fairgrounds": [
+    "Theme park background",
+    "Carousel in a fairground background",
+    "Haunted house attraction background",
+    "Roller coaster track background",
+    "Water park slides background",
+    "Carnival games area background"
+  ],
+  "Performance and Arts": [
+    "Theater stage with velvet curtains background",
+    "Recording studio with soundproofing background",
+    "Dance studio with mirrored walls background",
+    "Yoga studio with mats and meditation area background",
+    "Concert hall with grand piano background",
+    "Art workshop with creative space background"
+  ],
+  "Game and Hobby Rooms": [
+    "Bowling alley with polished lanes background",
+    "Game room with a pool table background",
+    "Craft room with sewing machine background",
+    "Arcade room with neon lights background",
+    "Reading nook with cozy armchair background",
+    "Puzzle room with brainteasers background"
+  ],
+  "Living Spaces": [
+    "Living room with a fireplace background",
+    "Kitchen with a breakfast bar background",
+    "Dining room with a chandelier background",
+    "Home theater with plush seating background",
+    "Bedroom with a cozy bed background",
+    "Bathroom with a bathtub background"
+  ],
+  "Apartments and Hotels": [
+    "Studio apartment with minimalist decor background",
+    "Loft with exposed brick walls background",
+    "Hotel lobby with luxurious furnishings background",
+    "Hotel room with a king-size bed background",
+    "Boutique hotel suite with modern design background",
+    "Serviced apartment with urban view background"
+  ],
+  "Dining and Retail": [
+    "Restaurant with elegant decor background",
+    "Cafe with cozy seating background",
+    "Bookstore with reading nooks background",
+    "Bistro with ambient lighting background",
+    "Food market with vibrant stalls background",
+    "Ice cream parlor with pastel interiors background"
+  ],
+  "Art and Education": [
+    "Art gallery with white walls and spotlights background",
+    "Museum exhibit with artifacts background",
+    "University lecture hall with rows of seats background",
+    "Classroom with chalkboard and desks background",
+    "Library study area with quiet ambiance background",
+    "Art studio with creative installations background"
+  ],
+  "Services and Health": [
+    "Hospital room with medical equipment background",
+    "Spa with massage tables and candles background",
+    "Beauty salon with hair styling stations background",
+    "Tattoo parlor with art-covered walls background",
+    "Photography studio with backdrop and lights background",
+    "Dental clinic with modern facilities background"
+  ],
+  "Miscellaneous Indoor Locations": [
+    "Indoor pool with lounge chairs background",
+    "Old library with antique books background",
+    "Underwater in a swimming pool background",
+    "Indoor skating rink with polished floors background",
+    "Subterranean bunker with industrial decor background",
+    "Indoor botanical conservatory background"
+  ],
+  "Professional Studio Photographs": [
+    "Studio portrait with soft lighting background",
+    "Product photography with white seamless background",
+    "Fashion shoot with dramatic shadows background",
+    "Architectural studio setup with minimalist decor background",
+    "High-end beauty shoot with reflective surfaces background",
+    "Editorial studio with dynamic lighting background"
+  ]
+}

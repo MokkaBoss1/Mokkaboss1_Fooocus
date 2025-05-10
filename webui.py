@@ -3,6 +3,7 @@
 ###########################################################
 import pathlib, urllib
 import gradio as gr
+from pathlib import Path
 import random
 import os
 import json
@@ -61,6 +62,24 @@ except (FileNotFoundError, json.JSONDecodeError):
 # Instantiate theme object
 theme = getattr(gr.themes, theme_name, gr.themes.Base)()
 ###############################################################
+
+# ——— Persisted feature‐toggle state —————————————————————————————
+ADD_FEATURES_FILE = os.path.join(os.path.dirname(__file__), "add_features.json")
+
+try:
+    with open(ADD_FEATURES_FILE, "r") as f:
+        _saved = json.load(f)
+    ip_toggle_default = _saved.get("ip_toggle", False)
+    pg_toggle_default = _saved.get("pg_toggle", False)
+except (FileNotFoundError, json.JSONDecodeError):
+    # first run: create file with both off
+    ip_toggle_default = False
+    pg_toggle_default = False
+    with open(ADD_FEATURES_FILE, "w") as f:
+        json.dump({"ip_toggle": ip_toggle_default, "pg_toggle": pg_toggle_default}, f)
+
+
+
 
 ###########################################################
 #        2 Start of locally requried functions            #
@@ -1142,46 +1161,54 @@ with shared.gradio_root:
                 rel_html    = os.path.relpath(abs_html, start=modules.config.path_outputs).replace("\\", "/")
                 history_url = f"/gradio_api/file=outputs/{rel_html}"
 
-                def trigger_crop():
-                    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                    bat_path     = os.path.join(project_root, "crop.bat")
-                    if not os.path.isfile(bat_path):
-                        raise FileNotFoundError(f"crop.bat not found at {bat_path}")
+                def run_crop():
+                    # this file is Fooocus/entry_with_update.py
+                    here     = Path(__file__).resolve().parent          # …\Fooocus
+                    project  = here.parent                              # …\Fooocus_win64_2-5-0\Fooocus_win64_2-5-0
+                    bat_path = project / "crop.bat"
+                    if not bat_path.exists():
+                        raise FileNotFoundError(f"Could not find {bat_path}")
+                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)
 
-                    # Run crop.bat in THIS console
-                    subprocess.Popen(
-                        bat_path,
-                        cwd=project_root,
-                        shell=True
-                    )
+                def run_prompt():
+                    here     = Path(__file__).resolve().parent
+                    project  = here.parent
+                    bat_path = project / "prompt.bat"
+                    if not bat_path.exists():
+                        raise FileNotFoundError(f"Could not find {bat_path}")
+                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)
 
                 with gr.Blocks() as demo:
-                    with gr.Row():
-                        history_btn = gr.Button("📚 History Log", variant="link")
-                        crop_btn    = gr.Button("📚 Image Processing", variant="link")
-
-                    # History Log button opens the URL via JS
-                    history_btn.click(
-                        fn=None,
-                        inputs=[],
-                        outputs=[],
-                        js=f"() => window.open('{history_url}', '_blank')"
-                    )
-
-                    # Image Processing button triggers the batch file
-                    crop_btn.click(
-                        fn=trigger_crop,
-                        inputs=[],
-                        outputs=[]
-                    )
-
-                if __name__ == "__main__":
-                    demo.launch(
-                        server_name="127.0.0.1",
-                        server_port=7861,
-                        share=False,
-                        inbrowser=True
-                    )
+                    with gr.Row(): 
+                        # start each button hidden or shown according to the saved state:
+                        ip_btn = gr.Button(
+                            "📷 Image Processing", 
+                            scale=2, 
+                            visible=ip_toggle_default    # ← use the loaded default
+                        )
+                        pg_btn = gr.Button(
+                            "💬 Prompt Generator", 
+                            scale=2, 
+                            visible=pg_toggle_default    # ← use the loaded default
+                        )
+                        # 3) 3rd button
+                        gr.Button("📚 Image History Log",        scale=2).click(
+                            fn=None, inputs=[], outputs=[],
+                            js=f"() => window.open('{history_url}', '_blank')"
+                        )
+                # tie your buttons to your Python helpers
+                ip_btn.click(
+                    fn=run_crop,      # Python function to run
+                    inputs=[],        # no inputs
+                    outputs=[],       # no outputs
+                    queue=False       # run synchronously
+                )
+                pg_btn.click(
+                    fn=run_prompt,    # Python function to run
+                    inputs=[],
+                    outputs=[],
+                    queue=False
+                )                            
 
 
     ###########################################################
@@ -1529,10 +1556,10 @@ with shared.gradio_root:
     ###########################################################
 
     ###########################################################
-    #                9.8 Start of Audio tab                   #
+    #                9.8 Start of Extras tab                   #
     ###########################################################
 
-            with gr.Tab(label='Audio'):
+            with gr.Tab(label='Extras'):
                 play_notification = gr.Checkbox(label='Play notification after rendering', value=False)
                 notification_file = 'notification.mp3'
                 if os.path.exists(notification_file):
@@ -1544,8 +1571,38 @@ with shared.gradio_root:
                     
                 with gr.Row(): theme_dd = gr.Dropdown(choices=THEME_NAMES, value=theme_name, label="Select Theme") 
                 info = gr.Markdown("")
-                theme_dd.change(fn=change_theme, inputs=theme_dd, outputs=info, js=None)                    
-                                    
+                theme_dd.change(fn=change_theme, inputs=theme_dd, outputs=info, js=None)
+                
+                gr.Markdown("🧩 Additional Features in settings tab")
+                with gr.Row():
+                    
+
+                    # … inside with gr.Row():  in your Extras tab …
+                    ip_toggle = gr.Checkbox(
+                        label='Image Processing Features',
+                        value=ip_toggle_default  # ← use loaded default
+                    )
+                    pg_toggle = gr.Checkbox(
+                        label='Prompt Generation Features',
+                        value=pg_toggle_default  # ← use loaded default
+                    )
+
+                    def _save_add_features(ip_val, pg_val):
+                        with open(ADD_FEATURES_FILE, "w") as f:
+                            json.dump({"ip_toggle": ip_val, "pg_toggle": pg_val}, f)
+
+                    ip_toggle.change(
+                        fn=on_feature_toggle,
+                        inputs=[ip_toggle, pg_toggle],
+                        outputs=[ip_btn, pg_btn],
+                        queue=False,
+                    )
+                    pg_toggle.change(
+                        fn=on_feature_toggle,
+                        inputs=[ip_toggle, pg_toggle],
+                        outputs=[ip_btn, pg_btn],
+                        queue=False,
+                    )                                    
                     
                     
 

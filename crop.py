@@ -37,6 +37,38 @@ REMOTE_JSON_PATH = "remote_open.json"
 aspect_ratios = ["unchanged", "1:1", "2:3", "3:2", "4:3", "3:4", "16:9", "9:16",
                  "5:4", "4:5", "7:5", "5:7", "21:9"]
 
+
+#####################################################################
+CONFIG_FILENAME = "theme_config.json"
+CONFIG_PATH     = os.path.join(os.path.dirname(__file__), CONFIG_FILENAME)
+
+# List of allowed theme names
+THEME_NAMES = [
+    "Base",
+    "Default",
+    "Origin",
+    "Citrus",
+    "Monochrome",
+    "Soft",
+    "Glass",
+    "Ocean"
+]
+
+DEFAULT_THEME = "Base"
+
+try:
+    with open(CONFIG_PATH, "r") as f:
+        cfg = json.load(f)
+        theme_name = cfg.get("theme", DEFAULT_THEME)
+except (FileNotFoundError, json.JSONDecodeError):
+    theme_name = DEFAULT_THEME
+
+
+# Instantiate theme object
+theme = getattr(gr.themes, theme_name, gr.themes.Base)()
+###############################################################
+
+
 def random_filename(extension):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=8)) + extension
 
@@ -193,6 +225,17 @@ def remove_bg_from_image(image, torchscript_mode, threshold):
     mask = rgba_image.getchannel("A")
     return rgba_image, mask
 
+def compose_and_remove_bg(image, shrink_factor, horizontal_position, vertical_position,
+                          aspect_ratio_str, megapixels, torchscript_mode, threshold):
+    # first do the composition
+    composed = process_image(image, shrink_factor, horizontal_position,
+                             vertical_position, aspect_ratio_str, megapixels)
+    # then remove the background from the composed result
+    return remove_bg_from_image(composed, torchscript_mode, threshold)
+
+
+
+
 # --------------------------------------
 # Functions for Overlay Background (Tab 4)
 # --------------------------------------
@@ -259,19 +302,30 @@ def apply_background(image_path, background_type, hue, saturation, luminosity,
 
     return Image.composite(img, background, alpha)
 
+
+def update_solid_preview(hue, sat, lum):
+    return f"""
+    <div style=\"
+        width:50px;
+        height:50px;
+        border:1px solid #000;
+        background-color:hsl({hue},{sat}%,{lum}%);
+    \"></div>
+    """
+
+
 # --------------------------
 # Gradio App UI
 # --------------------------
-with gr.Blocks(title="Ultimate Image Processor", css=".gradio-container {max-width: 1400px}") as app:
+with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max-width: 1400px}") as app:
     with gr.Tabs():
         # ---------------------------------------------------
         # Tab 1: Image Crop & Zoom
         # ---------------------------------------------------
-        with gr.Tab("🖼️ Image Crop & Zoom"):
-            gr.Markdown("# 🖼️ Image Crop, Zoom and Resize App")
+        with gr.Tab("🖼️ Image Crop, Zoom and Resize App"):
             with gr.Row():
                 with gr.Column(scale=10):
-                    input_image = gr.Image(type="pil", label="Input Image", width=500, height=440)
+                    input_image = gr.Image(type="pil", label="Input Image", width=500, height=435)
                     image_url = gr.Textbox(label="Image URL")
                     load_url_button = gr.Button("Load Image from URL")
                 with gr.Column(scale=20):
@@ -288,7 +342,7 @@ with gr.Blocks(title="Ultimate Image Processor", css=".gradio-container {max-wid
                     with gr.Row():
                         megapixels = gr.Slider(0.0, 10.0, 1.0, step=0.25, label="Megapixels")
                         file_type_crop = gr.Dropdown([".png", ".jpg", ".webp"], value=".png", label="File Type")
-                    process_button_crop = gr.Button("Process Image")
+                    process_button_crop = gr.Button("Process Image", variant="primary")
                 with gr.Column(scale=12):
                     processed_image_crop = gr.Image(type="pil", label="Output Image", interactive=False, width=500, height=205)
                     with gr.Row():
@@ -315,83 +369,74 @@ with gr.Blocks(title="Ultimate Image Processor", css=".gradio-container {max-wid
             load_url_button.click(load_image_from_url, inputs=image_url, outputs=input_image)
 
         # ---------------------------------------------------
-        # Tab 2: Image Composition
+        # Tab 2+3: Composition & Background Removal
         # ---------------------------------------------------
-        with gr.Tab("✂️ Image Composition"):
-            gr.Markdown("# ✂️ Image Composition")
+        with gr.Tab("✂️ Composition & Background Removal"):
+            
             with gr.Row():
-                with gr.Column():
-                    input_image_comp = gr.Image(type="pil", label="Input Image", width=725, height=250)
-                    shrink_factor = gr.Slider(0, 50, step=1, value=5, label="Shrink Factor (%)")
-                    horizontal_position = gr.Slider(0, 100, step=1, value=50,
-                                                    label="Horizontal Position (0=Left, 50=Center, 100=Right)")
-                    vertical_position = gr.Slider(0, 100, step=1, value=50,
-                                                  label="Vertical Position (0=Bottom, 50=Center, 100=Top)")
-                    with gr.Row():
-                        aspect_ratio_options_comp = [
-                            "1:1", "2:3", "3:2", "4:3", "3:4", "16:9",
-                            "9:16", "5:4", "4:5", "7:5", "5:7", "21:9", "unchanged"
-                        ]
-                        aspect_ratio_str_comp = gr.Dropdown(aspect_ratio_options_comp, value="3:2", label="Aspect Ratio")
-                        megapixels_comp = gr.Slider(0, 8.0, step=0.1, value=2.0, label="Megapixels (0 for natural size)")
-                    process_button_comp = gr.Button("Process Image")
-                with gr.Column():
-                    shrink_output = gr.Image(type="pil", label="Composed Output Image", width=725, height=250)
-                    with gr.Row():
-                        save_dir_comp = gr.Textbox(label="Save Directory", value="D:\\imagecropandzoominterface", interactive=True)
-                        file_type_comp = gr.Dropdown([".jpg", ".png", ".webp"], value=".jpg", label="File Type")
-                    save_button_comp = gr.Button("Save Composed Image")
-                    filename_display_comp = gr.Textbox(label="Filename", interactive=False)
-            process_button_comp.click(
-                process_image,
-                inputs=[input_image_comp, shrink_factor, horizontal_position, vertical_position, aspect_ratio_str_comp, megapixels_comp],
-                outputs=shrink_output
-            )
-            save_button_comp.click(
-                save_composition_action,
-                inputs=[shrink_output, file_type_comp, save_dir_comp],
-                outputs=filename_display_comp
-            )
+                with gr.Column(scale=12):
+                    input_image_comp = gr.Image(type="pil", label="Input Image", height=300)
+                    with gr.Accordion("✂️ Image Composition"):
+                        # Composition inputs
+                        with gr.Row():
+                            shrink_factor = gr.Slider(0, 50, step=1, value=0, label="Shrink Factor (%)")
+                            horizontal_position = gr.Slider(0, 100, step=1, value=50,
+                                                            label="Horizontal Position (0=Left, 50=Center, 100=Right)")
+                            vertical_position = gr.Slider(0, 100, step=1, value=50,
+                                                          label="Vertical Position (0=Bottom, 50=Center, 100=Top)")
+                        with gr.Row():
+                            aspect_ratio_options_comp = [
+                                "1:1", "2:3", "3:2", "4:3", "3:4", "16:9",
+                                "9:16", "5:4", "4:5", "7:5", "5:7", "21:9", "unchanged"
+                            ]
+                            aspect_ratio_str_comp = gr.Dropdown(aspect_ratio_options_comp, value="unchanged",
+                                                               label="Aspect Ratio")
+                            megapixels_comp = gr.Slider(0, 8.0, step=0.1, value=0,
+                                                        label="Megapixels (0 for natural size)")
 
-        # ---------------------------------------------------
-        # Tab 3: Background Removal
-        # ---------------------------------------------------
-        with gr.Tab("🔮 Background Removal"):
-            gr.Markdown("# 🔮 Background Removal\nUse the image from the 'Image Composition' tab as input.")
-            with gr.Row():
-                with gr.Column():
-                    bg_torchscript_mode = gr.Dropdown(
-                        choices=["default", "on"],
-                        value="on",
-                        label="TorchScript JIT Mode (for BG Removal)",
-                        info="Use 'on' for TorchScript JIT optimization"
-                    )
-                    bg_threshold = gr.Slider(
-                        0.0, 1.0, step=0.01, value=0.5,
-                        label="Background Removal Threshold",
-                        info="Adjust sensitivity of background detection"
-                    )
-                    remove_bg_button = gr.Button("Process Image")
-                with gr.Column():
-                    bg_removed_output = gr.Image(type="pil", label="Background Removed Image", width=725, height=300)
-                    mask_output = gr.Image(type="pil", label="Mask", width=725, height=300)
-            remove_bg_button.click(
-                remove_bg_from_image,
-                inputs=[shrink_output, bg_torchscript_mode, bg_threshold],
+                    with gr.Accordion("🔮 Background Removal Mode", open=False):
+                    
+                        bg_torchscript_mode = gr.Dropdown(
+                            choices=["default", "on"],
+                            value="on",
+                            label="TorchScript JIT Mode",
+                            info="Use 'on' for TorchScript JIT optimization"
+                        )
+                        bg_threshold = gr.Slider(
+                            0.0, 1.0, step=0.01, value=0.5,
+                            label="Background Removal Threshold",
+                            info="Adjust sensitivity of background detection"
+                        )
+
+                    process_button = gr.Button("Process Image", variant="primary")
+
+                with gr.Column(scale=12):
+                    
+                    bg_removed_output = gr.Image(type="pil", label="Background Removed Image", height=640)
+                    with gr.Accordion("✂️ Output Mask", open=False):
+                        mask_output = gr.Image(type="pil", label="Mask", height=300)
+
+            process_button.click(
+                compose_and_remove_bg,
+                inputs=[
+                    input_image_comp, shrink_factor, horizontal_position, vertical_position,
+                    aspect_ratio_str_comp, megapixels_comp,
+                    bg_torchscript_mode, bg_threshold
+                ],
                 outputs=[bg_removed_output, mask_output]
             )
+
 
         # ---------------------------------------------------
         # Tab 4: Overlay Background
         # ---------------------------------------------------
-        with gr.Tab("🌆 Overlay Background"):
-            gr.Markdown("# 🌆 Overlay Background for Transparent Image")
+        with gr.Tab("🌆 Overlay Background for Transparent Image"):
             with gr.Row():
                 with gr.Column():
                     subject_img = gr.Image(type="filepath", label="Subject Image", image_mode="RGBA", height=300)
                     background_img = gr.Image(type="filepath", label="Background Image", image_mode="RGB", height=300)
                 with gr.Column():
-                    compositor_output = gr.Image(type="pil", label="Result", height=460)
+                    compositor_output = gr.Image(type="pil", label="Result", height=500)
                     with gr.Row():
                         position_slider = gr.Slider(0, 100, 50, label="Background Position")
                         show_bg_toggle = gr.Checkbox(label="Show Background Preview")
@@ -399,7 +444,7 @@ with gr.Blocks(title="Ultimate Image Processor", css=".gradio-container {max-wid
                         blur_strength = gr.Slider(0, 8, 0, step=0.1, visible=False)
             blur_toggle.change(lambda x: gr.update(visible=x), blur_toggle, blur_strength)
             components_overlay = [subject_img, background_img, show_bg_toggle, position_slider, blur_toggle, blur_strength]
-            process_button_overlay = gr.Button("Process Image")
+            process_button_overlay = gr.Button("Process Image", variant="primary")
             process_button_overlay.click(
                 process_images,
                 inputs=components_overlay,
@@ -409,40 +454,84 @@ with gr.Blocks(title="Ultimate Image Processor", css=".gradio-container {max-wid
         # ---------------------------------------------------
         # Tab 5: Colour Background
         # ---------------------------------------------------
-        with gr.Tab("🎨 Colour Background"):
-            gr.Markdown("# 🎨 Colour Background for Transparent Image")
+        with gr.Tab("🎨 Colour Background for Transparent Image"):
             with gr.Row():
                 bg_type = gr.Radio(["Solid Color", "Gradient Background"], value="Solid Color")
+
             with gr.Row():
                 with gr.Column():
-                    input_img_color = gr.Image(type="filepath", label="Input Image", image_mode="RGBA", width=720, height=300)
+                    input_img_color = gr.Image(
+                        type="filepath", label="Input Image", image_mode="RGBA",
+                        width=720, height=300
+                    )
+
+                    # ─── Solid-color controls + live preview ────────────────────────────
                     with gr.Group(visible=True) as solid_controls:
                         hue = gr.Slider(0, 360, 0, label="Hue")
                         sat = gr.Slider(0, 100, 100, label="Saturation")
                         lum = gr.Slider(0, 100, 50, label="Luminosity")
+                        color_preview = gr.HTML(
+                            update_solid_preview(0, 100, 50),
+                            label="Preview",
+                        )
+
+                    # ─── Gradient-background controls with two live previews ─────────────
                     with gr.Group(visible=False) as gradient_controls:
                         with gr.Row():
+                            # Top Color block
                             with gr.Column():
                                 gr.Markdown("**Top Color**")
                                 t_hue = gr.Slider(0, 360, 0, label="Top Hue")
                                 t_sat = gr.Slider(0, 100, 100, label="Top Saturation")
                                 t_lum = gr.Slider(0, 100, 50, label="Top Luminosity")
+                                top_preview = gr.HTML(
+                                    update_solid_preview(0, 100, 50),
+                                    label="Top Preview"
+                                )
+                            # Bottom Color block
                             with gr.Column():
                                 gr.Markdown("**Bottom Color**")
                                 b_hue = gr.Slider(0, 360, 120, label="Bottom Hue")
                                 b_sat = gr.Slider(0, 100, 100, label="Bottom Saturation")
                                 b_lum = gr.Slider(0, 100, 50, label="Bottom Luminosity")
+                                bottom_preview = gr.HTML(
+                                    update_solid_preview(120, 100, 50),
+                                    label="Bottom Preview"
+                                )
+
                 with gr.Column():
-                    output_img_color = gr.Image(type="pil", label="Result", width=720, height=430)
-                    process_button_color = gr.Button("Process Image")
+                    output_img_color = gr.Image(type="pil", label="Result", height=550)
+                    process_button_color = gr.Button("Process Image", variant="primary")
+
+            # toggle between solid and gradient groups
             bg_type.change(
-                lambda x: (gr.update(visible=x == "Solid Color"), gr.update(visible=x == "Gradient Background")),
+                lambda x: (
+                    gr.update(visible=x == "Solid Color"),
+                    gr.update(visible=x == "Gradient Background")
+                ),
                 bg_type,
                 [solid_controls, gradient_controls]
             )
+
+            # wire solid-color sliders to update their preview
+            for slider in (hue, sat, lum):
+                slider.change(update_solid_preview, [hue, sat, lum], color_preview)
+
+            # wire gradient sliders to their previews
+            for (s_grp, preview) in ([(t_hue, t_sat, t_lum), top_preview],
+                                     [(b_hue, b_sat, b_lum), bottom_preview]):
+                for s in s_grp:
+                    s.change(update_solid_preview, list(s_grp), preview)
+
+            # final processing click
             process_button_color.click(
                 apply_background,
-                inputs=[input_img_color, bg_type, hue, sat, lum, t_hue, t_sat, t_lum, b_hue, b_sat, b_lum],
+                inputs=[
+                    input_img_color, bg_type,
+                    hue, sat, lum,
+                    t_hue, t_sat, t_lum,
+                    b_hue, b_sat, b_lum
+                ],
                 outputs=output_img_color
             )
 
