@@ -14,3 +14,14 @@ has a button to uppload prompt from the clipboard and a feature to change the gr
 I tested the regular image generation, variation and upscale, image prompt and inpaint successfully with Gradio 5.29
 
 Other features have so far not been tested (mainly because I tend personally to fooocus on the above :-) )
+
+the additional features can be controlled in the Extras tab (renamed Audio)
+<img width="520" alt="{4F65AE56-8406-48F6-BDCA-3EFE5258184C}" src="https://github.com/user-attachments/assets/bfb43a3e-2d65-45d5-b614-97988948092c" />
+
+this supports the trigger of an image generation and prompt generator interface in separate browser tabs
+
+<img width="1519" alt="{38BCABDA-81F0-475C-9B71-4907FF5E0983}" src="https://github.com/user-attachments/assets/eaf9e461-9b00-4a40-a668-f4bf2276d5cf" />
+Image Processing Interface
+
+<img width="1601" alt="{D087467D-4C19-405F-B3FC-D5BC9FE44BB9}" src="https://github.com/user-attachments/assets/6aa22862-ad58-4d72-87be-43d16462a91b" />
+Prompt Generation Interface
