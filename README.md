@@ -7,7 +7,8 @@ https://drive.google.com/file/d/1V1iOHYEmLj4uBOIioSkXKVTQiM1_cvwY/view?usp=drive
 
 
 has a button to uppload prompt from the clipboard and a feature to change the gradio theme of the app (currently set to ocean)
-![Uploading {F912CBDA-3B6E-4A69-AF76-63BDD471077C}.png…]()
+<img width="1616" alt="{F912CBDA-3B6E-4A69-AF76-63BDD471077C}" src="https://github.com/user-attachments/assets/ee9fee3f-a137-45bc-8c8d-85266f8e058a" />
+
 
 
 I tested the regular image generation, variation and upscale, image prompt and inpaint successfully with Gradio 5.29
