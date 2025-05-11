@@ -8,6 +8,28 @@ import numpy as np
 from PIL import Image, ImageFilter, ImageOps, ImageDraw
 import requests
 from io import BytesIO
+import logging
+import cv2
+import json  # Ensure this is imported
+import warnings
+
+# Suppress Tornado/Uvicorn logs to avoid mixing with HTTP responses in console
+for log_name in ("uvicorn.error", "uvicorn.access", "uvicorn"):
+    logging.getLogger(log_name).setLevel(logging.WARNING)
+
+warnings.filterwarnings(
+    "ignore",
+    message="torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument",
+    category=UserWarning,
+)
+warnings.filterwarnings(
+    "ignore",
+    message=r"You are using `torch.load` with `weights_only=False`",
+    category=FutureWarning,
+)
+
+
+
 
 import json  # Ensure this is imported
 import warnings
@@ -271,38 +293,7 @@ def process_images(subject_path, background_path, show_background, position, blu
 # -------------------------------------------
 # Functions for Colour Background (Tab 5)
 # -------------------------------------------
-def apply_background(image_path, background_type, hue, saturation, luminosity,
-                     top_hue, top_sat, top_lum, bottom_hue, bottom_sat, bottom_lum):
-    img = Image.open(image_path).convert("RGBA")
-    width, height = img.size
-    alpha = img.split()[-1]
-
-    if background_type == "Solid Color":
-        h = hue / 360.0
-        s = saturation / 100.0
-        l = luminosity / 100.0
-        r, g, b = colorsys.hls_to_rgb(h, l, s)
-        r, g, b = int(r * 255), int(g * 255), int(b * 255)
-        background = Image.new("RGBA", (width, height), (r, g, b, 255))
-    else:
-        def hsl_to_rgb(h, s, l):
-            h /= 360.0
-            s /= 100.0
-            l /= 100.0
-            return tuple(int(255 * x) for x in colorsys.hls_to_rgb(h, l, s))
-
-        top_rgb = hsl_to_rgb(top_hue, top_sat, top_lum)
-        bottom_rgb = hsl_to_rgb(bottom_hue, bottom_sat, bottom_lum)
-        y = np.linspace(0, 1, height)
-        gradient = np.zeros((height, width, 3), dtype=np.uint8)
-        for i in range(3):
-            gradient[:, :, i] = np.outer((1 - y) * top_rgb[i] + y * bottom_rgb[i],
-                                         np.ones(width))
-        background = Image.fromarray(gradient, 'RGB').convert('RGBA')
-
-    return Image.composite(img, background, alpha)
-
-
+# ─── live-preview helper for solid colours ─────────────────────────────────────────
 def update_solid_preview(hue, sat, lum):
     return f"""
     <div style=\"
@@ -312,7 +303,115 @@ def update_solid_preview(hue, sat, lum):
         background-color:hsl({hue},{sat}%,{lum}%);
     \"></div>
     """
+def apply_background(
+    image_path,
+    background_type,
+    hue, saturation, luminosity,
+    top_hue, top_sat, top_lum,
+    bottom_hue, bottom_sat, bottom_lum,
+    generate_only=False,
+    width=720,
+    height=300
+):
+    """
+    Generates a solid or gradient background. If generate_only is False and image_path is provided,
+    it overlays the input image; otherwise returns just the background of given dimensions.
+    """
+    # Determine canvas size
+    if generate_only or image_path is None:
+        out_w, out_h = int(width), int(height)
+    else:
+        img = Image.open(image_path).convert("RGBA")
+        out_w, out_h = img.size
+    
+    # Create background
+    if background_type == "Solid Color":
+        # Convert HSL to RGB
+        h = hue / 360.0
+        s = saturation / 100.0
+        l = luminosity / 100.0
+        r, g, b = colorsys.hls_to_rgb(h, l, s)
+        rgb = (int(r * 255), int(g * 255), int(b * 255), 255)
+        background = Image.new("RGBA", (out_w, out_h), rgb)
+    else:
+        # Gradient
+        def hsl_to_rgb_int(h_deg, s_pct, l_pct):
+            h = h_deg / 360.0
+            s = s_pct / 100.0
+            l = l_pct / 100.0
+            return tuple(int(255 * x) for x in colorsys.hls_to_rgb(h, l, s))
 
+        top_rgb = hsl_to_rgb_int(top_hue, top_sat, top_lum)
+        bottom_rgb = hsl_to_rgb_int(bottom_hue, bottom_sat, bottom_lum)
+        # build gradient array
+        y = np.linspace(0, 1, out_h)
+        gradient = np.zeros((out_h, out_w, 4), dtype=np.uint8)
+        for i in range(3):
+            gradient[:, :, i] = np.outer((1 - y) * top_rgb[i] + y * bottom_rgb[i], np.ones(out_w))
+        gradient[:, :, 3] = 255
+        background = Image.fromarray(gradient, 'RGBA')
+
+    # If generate_only, return background directly
+    if generate_only or image_path is None:
+        return background
+
+    # Otherwise overlay the input image
+    alpha = img.split()[-1]
+    return Image.composite(img, background, alpha)
+# -------------------------------------------
+# Functions for Vignette (Tab 6)
+# -------------------------------------------
+def add_vignette_with_ui_params(
+    img: np.ndarray,
+    image_scale: float = 1.0,
+    exposure: float = -2.372,
+    hardness: float = 0.50,
+    scale: float   = 0.28,
+    shape: float   = 0.50,
+    fill_grey: bool = False
+) -> np.ndarray:
+    if img is None:
+        return None
+    # 1) scale the input image
+    if image_scale != 1.0:
+        h0, w0 = img.shape[:2]
+        new_w = max(1, int(w0 * image_scale))
+        new_h = max(1, int(h0 * image_scale))
+        img = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_AREA)
+    # 2) optional grey fill
+    if fill_grey:
+        grey_val = 0.5 * 255
+        img = np.full_like(img, grey_val, dtype=np.uint8)
+    h, w = img.shape[:2]
+    # 3) normalized coordinate grid
+    xs = np.linspace(-1, 1, w)
+    ys = np.linspace(-1, 1, h)
+    xv, yv = np.meshgrid(xs, ys)
+    # 4) ellipse ratio from shape
+    ratio = 10 ** (1 - 2 * shape)
+    # 5) compute ellipse radii so that shape symmetric around circle
+    if ratio >= 1.0:
+        rx = scale
+        ry = scale * ratio
+    else:
+        rx = scale / ratio
+        ry = scale
+    # 6) binary ellipse mask
+    mask = ((xv / rx) ** 2 + (yv / ry) ** 2 <= 1.0).astype(np.float32)
+    # 7) blur edge based on hardness
+    max_dim = max(h, w)
+    sigma = (1.0 - hardness) * (max_dim * 0.5)
+    if hardness < 1.0:
+        ksize = int(2 * np.ceil(2 * sigma) + 1)
+        mask = cv2.GaussianBlur(mask, (ksize, ksize), sigmaX=sigma, sigmaY=sigma)
+    # 8) apply exposure mapping
+    exp_factor = 2.0 ** exposure
+    mask_exp = exp_factor + mask * (1.0 - exp_factor)
+    # 9) apply mask to image
+    out = img.astype(np.float32)
+    for c in range(3):
+        out[..., c] *= mask_exp
+    return np.clip(out, 0, 255).astype(np.uint8)
 
 # --------------------------
 # Gradio App UI
@@ -430,7 +529,7 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
         # ---------------------------------------------------
         # Tab 4: Overlay Background
         # ---------------------------------------------------
-        with gr.Tab("🌆 Overlay Background for Transparent Image"):
+        with gr.Tab("🌆 Overlay Background"):
             with gr.Row():
                 with gr.Column():
                     subject_img = gr.Image(type="filepath", label="Subject Image", image_mode="RGBA", height=300)
@@ -454,56 +553,72 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
         # ---------------------------------------------------
         # Tab 5: Colour Background
         # ---------------------------------------------------
-        with gr.Tab("🎨 Colour Background for Transparent Image"):
+        with gr.Tab("🎨 Colour Background"):
             with gr.Row():
-                bg_type = gr.Radio(["Solid Color", "Gradient Background"], value="Solid Color")
-
+                bg_type = gr.Radio(
+                    ["Solid Color", "Gradient Background"], value="Solid Color",
+                    label="Background Type"
+                )
+                generate_only = gr.Checkbox(
+                    label="Generate Background Only (skip overlay)", value=False
+                )
             with gr.Row():
                 with gr.Column():
                     input_img_color = gr.Image(
                         type="filepath", label="Input Image", image_mode="RGBA",
-                        width=720, height=300
+                        visible=True
                     )
-
-                    # ─── Solid-color controls + live preview ────────────────────────────
+                    width_input = gr.Number(
+                        label="Width", value=813, interactive=True, visible=False
+                    )
+                    height_input = gr.Number(
+                        label="Height", value=1216, interactive=True, visible=False
+                    )
+                    # Solid color controls
                     with gr.Group(visible=True) as solid_controls:
                         hue = gr.Slider(0, 360, 0, label="Hue")
                         sat = gr.Slider(0, 100, 100, label="Saturation")
                         lum = gr.Slider(0, 100, 50, label="Luminosity")
                         color_preview = gr.HTML(
-                            update_solid_preview(0, 100, 50),
-                            label="Preview",
+                            update_solid_preview(0, 100, 50), label="Preview"
                         )
-
-                    # ─── Gradient-background controls with two live previews ─────────────
+                    # Gradient controls
                     with gr.Group(visible=False) as gradient_controls:
                         with gr.Row():
-                            # Top Color block
+                            # Top color
                             with gr.Column():
                                 gr.Markdown("**Top Color**")
                                 t_hue = gr.Slider(0, 360, 0, label="Top Hue")
                                 t_sat = gr.Slider(0, 100, 100, label="Top Saturation")
                                 t_lum = gr.Slider(0, 100, 50, label="Top Luminosity")
                                 top_preview = gr.HTML(
-                                    update_solid_preview(0, 100, 50),
-                                    label="Top Preview"
+                                    update_solid_preview(0, 100, 50), label="Top Preview"
                                 )
-                            # Bottom Color block
+                            # Bottom color
                             with gr.Column():
                                 gr.Markdown("**Bottom Color**")
                                 b_hue = gr.Slider(0, 360, 120, label="Bottom Hue")
                                 b_sat = gr.Slider(0, 100, 100, label="Bottom Saturation")
                                 b_lum = gr.Slider(0, 100, 50, label="Bottom Luminosity")
                                 bottom_preview = gr.HTML(
-                                    update_solid_preview(120, 100, 50),
-                                    label="Bottom Preview"
+                                    update_solid_preview(120, 100, 50), label="Bottom Preview"
                                 )
-
                 with gr.Column():
                     output_img_color = gr.Image(type="pil", label="Result", height=550)
                     process_button_color = gr.Button("Process Image", variant="primary")
 
-            # toggle between solid and gradient groups
+            # Show/hide input vs size fields based on generate_only
+            generate_only.change(
+                lambda gen: (
+                    gr.update(visible=not gen),  # input image
+                    gr.update(visible=gen),       # width input
+                    gr.update(visible=gen)        # height input
+                ),
+                generate_only,
+                [input_img_color, width_input, height_input]
+            )
+
+            # Toggle solid vs gradient controls
             bg_type.change(
                 lambda x: (
                     gr.update(visible=x == "Solid Color"),
@@ -513,27 +628,63 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
                 [solid_controls, gradient_controls]
             )
 
-            # wire solid-color sliders to update their preview
+            # Update previews
             for slider in (hue, sat, lum):
                 slider.change(update_solid_preview, [hue, sat, lum], color_preview)
-
-            # wire gradient sliders to their previews
-            for (s_grp, preview) in ([(t_hue, t_sat, t_lum), top_preview],
-                                     [(b_hue, b_sat, b_lum), bottom_preview]):
+            for (s_grp, preview) in ([(t_hue, t_sat, t_lum), top_preview], [(b_hue, b_sat, b_lum), bottom_preview]):
                 for s in s_grp:
                     s.change(update_solid_preview, list(s_grp), preview)
 
-            # final processing click
+            # Final processing
             process_button_color.click(
                 apply_background,
                 inputs=[
                     input_img_color, bg_type,
                     hue, sat, lum,
                     t_hue, t_sat, t_lum,
-                    b_hue, b_sat, b_lum
+                    b_hue, b_sat, b_lum,
+                    generate_only, width_input, height_input
                 ],
                 outputs=output_img_color
             )
+
+        ############################
+        # last tab vignette
+        ############################
+
+        with gr.Tab("🎥 Vignette Generator"):
+            with gr.Row():
+                with gr.Column(scale=10):
+                    input_img_vig = gr.Image(type="numpy", label="Input Image", height=500)
+                with gr.Column(scale=10):
+                    img_scale_slider = gr.Slider(0.1, 1.0, 1.0, step=0.01, label="Image Scale (10%–100%)")
+                    exp_slider = gr.Slider(-2.5, 0.0, -1.7, step=0.01, label="Exposure (stops)")
+                    hard_slider = gr.Slider(0.4, 1.0, 0.65, step=0.01, label="Hardness (0=blur,1=hard edge)")
+                    scale_slider = gr.Slider(0.0, 1.0, 0.60, step=0.01, label="Vignette Scale")
+                    shape_slider = gr.Slider(0.25, 0.75, 0.50, step=0.01, label="Shape (0=tall ellipse,0.5=circle,1=wide ellipse)")
+                    fill_checkbox = gr.Checkbox(label="Fill with 50% grey", value=False)
+                    process_btn_vig = gr.Button("Process Vignette", variant="primary")
+                with gr.Column(scale=10):
+                    output_img_vig = gr.Image(type="numpy", label="Vignette Result", height=500)
+
+            process_btn_vig.click(
+                fn=add_vignette_with_ui_params,
+                inputs=[
+                    input_img_vig,
+                    img_scale_slider,
+                    exp_slider,
+                    hard_slider,
+                    scale_slider,
+                    shape_slider,
+                    fill_checkbox
+                ],
+                outputs=[output_img_vig]
+            )
+
+
+
+
+
 
 if __name__ == "__main__":
     server_name = "127.0.0.1"
