@@ -40,15 +40,15 @@ CONFIG_PATH     = os.path.join(os.path.dirname(__file__), CONFIG_FILENAME)
 ADD_FEATURES_FILE = os.path.join(os.path.dirname(__file__), "add_features.json")
 
 
-def on_feature_toggle(ip_val, pg_val, ro_val, br_val):
-    print(f"[DEBUG] on_feature_toggle called with ip_val={ip_val}, pg_val={pg_val}, ro_val={ro_val}, br_val={br_val}")  
+def on_feature_toggle(ip_val, pg_val, ro_val, br_val, wc_val):
+    print(f"[DEBUG] on_feature_toggle called with ip_val={ip_val}, pg_val={pg_val}, ro_val={ro_val}, br_val={br_val}, wc_val={wc_val}")  
     try:
         with open(ADD_FEATURES_FILE, "w") as f:
-            json.dump({"ip_toggle": ip_val, "pg_toggle": pg_val, "ro_toggle": ro_val, "br_toggle": br_val}, f)
+            json.dump({"ip_toggle": ip_val, "pg_toggle": pg_val, "ro_toggle": ro_val, "br_toggle": br_val, "wc_toggle": wc_val}, f)
         print(f"[DEBUG] Wrote to {ADD_FEATURES_FILE}")
     except Exception as e:
         print(f"[ERROR] Writing JSON failed: {e}")
-    return gr.update(visible=ip_val), gr.update(visible=pg_val), gr.update(visible=ro_val), gr.update(visible=br_val)
+    return gr.update(visible=ip_val), gr.update(visible=pg_val), gr.update(visible=ro_val), gr.update(visible=br_val), gr.update(visible=wc_val)
 
 
 

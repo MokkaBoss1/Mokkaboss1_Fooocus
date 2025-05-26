@@ -809,7 +809,7 @@ with shared.gradio_root:
                                                   open=False) as sam_options:
                                     enhance_mask_sam_model = gr.Dropdown(label='SAM model',
                                                                          choices=flags.inpaint_mask_sam_model,
-                                                                         value=modules.config.default_inpaint_mask_sam_model,
+                                                                         value=modules.config.default_sam_max_detections,
                                                                          interactive=True)
                                     enhance_mask_box_threshold = gr.Slider(label="Box Threshold", minimum=0.0,
                                                                            maximum=1.0, value=0.3, step=0.05,
@@ -1199,14 +1199,16 @@ with shared.gradio_root:
                     bat_path = project / "crop.bat"
                     if not bat_path.exists():
                         raise FileNotFoundError(f"Could not find {bat_path}")
-                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)
-
-                def run_prompt():
+                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)                def run_prompt():
                     here     = Path(__file__).resolve().parent
                     project  = here.parent
                     bat_path = project / "prompt.bat"
                     if not bat_path.exists():
                         raise FileNotFoundError(f"Could not find {bat_path}")
+                    # First open the browser window directly from Python
+                    import webbrowser
+                    webbrowser.open("http://localhost:7863")
+                    # Then run the bat file (which will start the server)
                     subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)
                     
                 def run_reorganize():
@@ -1223,15 +1225,17 @@ with shared.gradio_root:
                     bat_path = project / "browse.bat"
                     if not bat_path.exists():
                         raise FileNotFoundError(f"Could not find {bat_path}")
-                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)
-
-                def run_wildcard():
+                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)                        def run_wildcard():
                     here     = Path(__file__).resolve().parent
                     project  = here.parent
                     bat_path = project / "wildcard.bat"
                     if not bat_path.exists():
                         raise FileNotFoundError(f"Could not find {bat_path}")
-                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)                     
+                    # First open the browser window directly from Python
+                    import webbrowser
+                    webbrowser.open("http://localhost:7862")
+                    # Then run the bat file (which will start the server)
+                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)
 
                 with gr.Blocks() as demo:
                     with gr.Row(): 
@@ -1255,18 +1259,14 @@ with shared.gradio_root:
                             "📂 Image Browser", 
                             scale=2, 
                             visible=br_toggle_default    # ← use the loaded default
-                        )
+                        )                       
                         wc_btn = gr.Button(
-                            "🎲 Edit Wildcards", 
+                            "🎲 Wildcard Generator", 
                             scale=2, 
                             visible=wc_toggle_default    # ← use the loaded default
-                        )
+                        )                       
 
-
-
-                        
-
-                        gr.Button("📚 Image Log", scale=2).click(
+                        gr.Button("📚 Image History Log",        scale=2).click(
                             fn=None, inputs=[], outputs=[],
                             js=f"() => window.open('{history_url}', '_blank')"
                         )
@@ -1300,12 +1300,7 @@ with shared.gradio_root:
                     inputs=[],
                     outputs=[],
                     queue=False
-                )                
-                
-                
-                
-                
-                
+                )
     ###########################################################
     #                9.2 Start of Styles tab n                #
     ###########################################################
@@ -1505,11 +1500,11 @@ with shared.gradio_root:
                         disable_intermediate_results = gr.Checkbox(label='Disable Intermediate Results',
                                                       value=flags.Performance.has_restricted_features(modules.config.default_performance),
                                                       info='Disable intermediate results during generation, only show final gallery.')
+
                         disable_seed_increment = gr.Checkbox(label='Disable seed increment',
-                                                      info='Disable automatic seed increment when image number is > 1.',
-                                                      value=False)
-                        read_wildcards_in_order = gr.Checkbox(label="Read wildcards in order", value=True,
-                                                            info='Read wildcards in sequential order instead of randomly')
+                                                             info='Disable automatic seed increment when image number is > 1.',
+                                                             value=False)
+                        read_wildcards_in_order = gr.Checkbox(label="Read wildcards in order", value=False)
 
                         black_out_nsfw = gr.Checkbox(label='Black Out NSFW', value=modules.config.default_black_out_nsfw,
                                                      interactive=not modules.config.default_black_out_nsfw,
@@ -1690,9 +1685,10 @@ with shared.gradio_root:
                         value=br_toggle_default  # ← use loaded default
                     )                    
                     wc_toggle = gr.Checkbox(
-                        label='Edit Wildcards',
+                        label='Wildcard Generator',
                         value=wc_toggle_default  # ← use loaded default
                     )                    
+                    
                     
                     
                     
@@ -1725,13 +1721,13 @@ with shared.gradio_root:
                         inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
                         outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
                         queue=False,
-                    )
+                    )                   
                     wc_toggle.change(
                         fn=on_feature_toggle,
                         inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
                         outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
                         queue=False,
-                    )                      
+                    )                   
 
     ###########################################################
     #                9.8 End of Audio tab                     #

@@ -5,7 +5,7 @@ import random
 import string
 import colorsys
 import numpy as np
-from PIL import Image, ImageFilter, ImageOps, ImageDraw
+from PIL import Image, ImageFilter, ImageOps, ImageDraw, ImageEnhance
 import requests
 from io import BytesIO
 import logging
@@ -47,6 +47,9 @@ warnings.filterwarnings(
 
 # Allow duplicate OpenMP runtimes. Use with caution.
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
+
+# Global last generated image across tabs
+last_output_global = None
 
 # -----------------------------------------------------------------------------
 # Load Server Setting from JSON (reuse from previous programs)
@@ -148,6 +151,17 @@ def main(input_img, aspect_ratio, exact_ratio, zoom, x_offset, y_offset,
             img = img.resize((int(img.width * scale), int(img.height * scale)), Image.Resampling.LANCZOS)
 
     return img, img.width, img.height, img.width / img.height, (img.width * img.height) / 1e6
+ 
+# Tab1 wrapper to store last output image
+def main_and_store(input_img, aspect_ratio, exact_ratio, zoom,
+                   x_offset, y_offset, megapixels, out_border,
+                   in_border, border_color):
+    global last_output_global
+    img, w, h, ar, mp = main(input_img, aspect_ratio, exact_ratio, zoom,
+                              x_offset, y_offset, megapixels,
+                              out_border, in_border, border_color)
+    last_output_global = img
+    return img, w, h, ar, mp
 
 def save_crop_zoom_action(image, file_type, save_dir):
     if image:
@@ -248,15 +262,48 @@ def remove_bg_from_image(image, torchscript_mode, threshold):
     return rgba_image, mask
 
 def compose_and_remove_bg(image, shrink_factor, horizontal_position, vertical_position,
-                          aspect_ratio_str, megapixels, torchscript_mode, threshold):
-    # first do the composition
+                          aspect_ratio_str, megapixels, torchscript_mode, threshold, preview):
+    # First, do the composition
     composed = process_image(image, shrink_factor, horizontal_position,
                              vertical_position, aspect_ratio_str, megapixels)
-    # then remove the background from the composed result
-    return remove_bg_from_image(composed, torchscript_mode, threshold)
+    if composed is None:
+        return None, None  # Return None if composition fails
 
+    # Skip background removal if preview is enabled
+    if preview:
+        return composed, None  # Return the composed image and no mask
 
+    # Perform background removal
+    rgba_image, mask = remove_bg_from_image(composed, torchscript_mode, threshold)
 
+    return rgba_image, mask
+
+def calculate_output_fields(image):
+    if image is None:
+        return 0, 0, 0.0, 0.0
+    width, height = image.size
+    aspect_ratio = width / height
+    megapixels = (width * height) / 1e6
+    return width, height, aspect_ratio, megapixels
+# Function to process composition, background removal and store last output image
+def process_and_store_comp(
+    image, shrink_factor, horizontal_position, vertical_position,
+    aspect_ratio_str, megapixels, torchscript_mode, threshold, preview
+):
+    global last_output_global
+    comp, mask = compose_and_remove_bg(
+        image, shrink_factor, horizontal_position, vertical_position,
+        aspect_ratio_str, megapixels, torchscript_mode, threshold, preview
+    )
+    if comp is not None:
+        last_output_global = comp
+    # Compute fields for comp
+    width, height, ar, mp = calculate_output_fields(comp)
+    return comp, mask, width, height, ar, mp
+
+def get_last_output_comp():
+    """Return last generated composition output image"""
+    return last_output_comp
 
 # --------------------------------------
 # Functions for Overlay Background (Tab 4)
@@ -289,6 +336,15 @@ def process_images(subject_path, background_path, show_background, position, blu
     background_rgba = resized_bg.convert("RGBA")
     composite = Image.alpha_composite(background_rgba, subject)
     return resized_bg if show_background else composite
+ 
+# Wrapper to process overlay and store last output
+def process_and_store_overlay(subject_path, background_path, show_background, position, blur_enabled, blur_strength):
+    global last_output_global
+    out = process_images(subject_path, background_path, show_background, position, blur_enabled, blur_strength)
+    last_output_global = out
+    # calculate output fields
+    w, h, ar, mp = calculate_output_fields(out)
+    return out, w, h, ar, mp
 
 # -------------------------------------------
 # Functions for Colour Background (Tab 5)
@@ -358,6 +414,24 @@ def apply_background(
     # Otherwise overlay the input image
     alpha = img.split()[-1]
     return Image.composite(img, background, alpha)
+
+# Wrapper to process colour background and store last output
+def process_and_store_color(image_path, background_type,
+                            hue, saturation, luminosity,
+                            top_hue, top_sat, top_lum,
+                            bottom_hue, bottom_sat, bottom_lum,
+                            generate_only=False, width=720, height=300):
+    global last_output_global
+    result = apply_background(
+        image_path, background_type,
+        hue, saturation, luminosity,
+        top_hue, top_sat, top_lum,
+        bottom_hue, bottom_sat, bottom_lum,
+        generate_only, width, height
+    )
+    last_output_global = result
+    w, h, ar, mp = calculate_output_fields(result)
+    return result, w, h, ar, mp
 # -------------------------------------------
 # Functions for Vignette (Tab 6)
 # -------------------------------------------
@@ -412,6 +486,52 @@ def add_vignette_with_ui_params(
     for c in range(3):
         out[..., c] *= mask_exp
     return np.clip(out, 0, 255).astype(np.uint8)
+    
+# Wrapper to process vignette and store last output
+def process_and_store_vignette(
+    img: np.ndarray,
+    brightness: float,
+    exposure: float,
+    hardness: float,
+    vignette_scale: float,
+    shape: float,
+    fill_grey: bool
+) -> tuple:
+    """
+    Apply vignette, convert to PIL, store global, and compute output fields.
+    """
+    global last_output_global
+    arr = add_vignette_with_ui_params(img, brightness, exposure, hardness, vignette_scale, shape, fill_grey)
+    if arr is None:
+        last_output_global = None
+        return None, 0, 0, 0.0, 0.0
+    # Convert to PIL and apply brightness
+    pil = Image.fromarray(arr)
+    # Adjust brightness
+    enhancer = ImageEnhance.Brightness(pil)
+    bright_pil = enhancer.enhance(brightness)
+    last_output_global = bright_pil
+    w, h, ar, mp = calculate_output_fields(bright_pil)
+    return bright_pil, w, h, ar, mp
+
+# -------------------------------------------
+# Reusable UI Components
+# -------------------------------------------
+def create_output_ui_components(label_prefix=""):
+    """
+    Creates reusable UI components for output image properties and saving functionality.
+    """
+    with gr.Row():
+        output_width = gr.Number(label=f"{label_prefix}Width", interactive=False)
+        output_height = gr.Number(label=f"{label_prefix}Height", interactive=False)
+    with gr.Row():
+        output_aspect_ratio = gr.Number(label=f"{label_prefix}Aspect Ratio", interactive=False, precision=3)
+        output_megapixels = gr.Number(label=f"{label_prefix}Megapixels", interactive=False, precision=3)
+    with gr.Row():
+        filename_display = gr.Textbox(label=f"{label_prefix}Filename", interactive=False)
+        save_dir = gr.Textbox("D:\\imagecropandzoominterface", label=f"{label_prefix}Save Directory")
+    save_button = gr.Button(f"Save {label_prefix}Image")
+    return output_width, output_height, output_aspect_ratio, output_megapixels, filename_display, save_dir, save_button
 
 # --------------------------
 # Gradio App UI
@@ -441,21 +561,17 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
                     with gr.Row():
                         megapixels = gr.Slider(0.0, 10.0, 1.0, step=0.25, label="Megapixels")
                         file_type_crop = gr.Dropdown([".png", ".jpg", ".webp"], value=".png", label="File Type")
-                    process_button_crop = gr.Button("Process Image", variant="primary")
+                    # Action buttons on one row for Tab1
+                    with gr.Row():
+                        process_button_crop = gr.Button("Process Image", variant="primary")
+                        paste_last_button_tab1 = gr.Button("Paste Last Image")
                 with gr.Column(scale=12):
                     processed_image_crop = gr.Image(type="pil", label="Output Image", interactive=False, width=500, height=205)
-                    with gr.Row():
-                        output_width = gr.Number(label="Width", interactive=False)
-                        output_height = gr.Number(label="Height", interactive=False)
-                    with gr.Row():
-                        output_aspect_ratio = gr.Number(label="Aspect Ratio", interactive=False)
-                        output_megapixels = gr.Number(label="Megapixels", interactive=False)
-                    with gr.Row():
-                        filename_display_crop = gr.Textbox(label="Filename", interactive=False)
-                        save_dir_crop = gr.Textbox("D:\\imagecropandzoominterface", label="Save Directory")
-                    save_button_crop = gr.Button("Save Image")
+                    (output_width, output_height, output_aspect_ratio, output_megapixels,
+                     filename_display_crop, save_dir_crop, save_button_crop) = create_output_ui_components()
+            # Bind wrapper to store last output
             process_button_crop.click(
-                main,
+                main_and_store,
                 [input_image, aspect_ratio, exact_aspect_ratio, zoom, x_offset, y_offset,
                  megapixels, outside_border, inside_border, border_color],
                 [processed_image_crop, output_width, output_height, output_aspect_ratio, output_megapixels]
@@ -466,16 +582,21 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
                 filename_display_crop
             )
             load_url_button.click(load_image_from_url, inputs=image_url, outputs=input_image)
+            # Paste button click for Tab1
+            paste_last_button_tab1.click(
+                lambda: gr.update(value=last_output_global),
+                [],
+                [input_image]
+            )
 
         # ---------------------------------------------------
         # Tab 2+3: Composition & Background Removal
         # ---------------------------------------------------
         with gr.Tab("✂️ Composition & Background Removal"):
-            
             with gr.Row():
                 with gr.Column(scale=12):
                     input_image_comp = gr.Image(type="pil", label="Input Image", height=300)
-                    with gr.Accordion("✂️ Image Composition"):
+                    with gr.Accordion("✂️ Image Composition", open=False):
                         # Composition inputs
                         with gr.Row():
                             shrink_factor = gr.Slider(0, 50, step=1, value=0, label="Shrink Factor (%)")
@@ -488,13 +609,15 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
                                 "1:1", "2:3", "3:2", "4:3", "3:4", "16:9",
                                 "9:16", "5:4", "4:5", "7:5", "5:7", "21:9", "unchanged"
                             ]
-                            aspect_ratio_str_comp = gr.Dropdown(aspect_ratio_options_comp, value="unchanged",
-                                                               label="Aspect Ratio")
-                            megapixels_comp = gr.Slider(0, 8.0, step=0.1, value=0,
-                                                        label="Megapixels (0 for natural size)")
+                            aspect_ratio_str_comp = gr.Dropdown(
+                                aspect_ratio_options_comp, value="unchanged", label="Aspect Ratio"
+                            )
+                            megapixels_comp = gr.Slider(
+                                0, 8.0, step=0.1, value=0, label="Megapixels (0 for natural size)"
+                            )
+                            preview_checkbox = gr.Checkbox(label="Preview (Skip Background Removal)", value=False)
 
                     with gr.Accordion("🔮 Background Removal Mode", open=False):
-                    
                         bg_torchscript_mode = gr.Dropdown(
                             choices=["default", "on"],
                             value="on",
@@ -507,24 +630,52 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
                             info="Adjust sensitivity of background detection"
                         )
 
-                    process_button = gr.Button("Process Image", variant="primary")
+                    # Action buttons on one row
+                    with gr.Row():
+                        process_button = gr.Button("Process Image", variant="primary")
+                        paste_last_button = gr.Button("Paste Last Image")
 
                 with gr.Column(scale=12):
-                    
-                    bg_removed_output = gr.Image(type="pil", label="Background Removed Image", height=640)
-                    with gr.Accordion("✂️ Output Mask", open=False):
-                        mask_output = gr.Image(type="pil", label="Mask", height=300)
+                    # Output components
+                    bg_removed_output = gr.Image(type="pil", label="Background Removed Image", interactive=False, height=300)
+                    with gr.Accordion("✂️ Mask Output", open=False):  # Restore the Mask Accordion
+                        mask_output = gr.Image(type="pil", label="Mask Output", interactive=False, height=300)
+                    with gr.Accordion("✂️ Output Details", open=False):
+                        with gr.Row():
+                            output_aspect_ratio = gr.Number(label="Aspect Ratio", interactive=False, precision=3)
+                            output_megapixels = gr.Number(label="Megapixels", interactive=False, precision=3)
+                            file_type_comp = gr.Dropdown([".png", ".jpg", ".webp"], value=".png", label="File Type")
+                        with gr.Row():
+                            output_width = gr.Number(label="Width", interactive=False)
+                            output_height = gr.Number(label="Height", interactive=False)
+                        with gr.Row():
+                            filename_display = gr.Textbox(label="Filename", interactive=False)
+                            save_dir = gr.Textbox("D:\\imagecropandzoominterface", label="Save Directory")
+                        save_button = gr.Button("Save Image")
 
+            # Process button click event
             process_button.click(
-                compose_and_remove_bg,
-                inputs=[
-                    input_image_comp, shrink_factor, horizontal_position, vertical_position,
-                    aspect_ratio_str_comp, megapixels_comp,
-                    bg_torchscript_mode, bg_threshold
-                ],
-                outputs=[bg_removed_output, mask_output]
+                process_and_store_comp,
+                [input_image_comp, shrink_factor, horizontal_position, vertical_position,
+                 aspect_ratio_str_comp, megapixels_comp,
+                 bg_torchscript_mode, bg_threshold, preview_checkbox],
+                [bg_removed_output, mask_output,
+                 output_width, output_height, output_aspect_ratio, output_megapixels]
+            )
+            # Paste last output image into input
+            # Paste last output image into input (use update to ensure component refresh)
+            paste_last_button.click(
+                lambda: gr.update(value=last_output_global),
+                [],
+                [input_image_comp]
             )
 
+            # Save button click event
+            save_button.click(
+                save_composition_action,
+                [bg_removed_output, file_type_comp, save_dir],
+                filename_display
+            )
 
         # ---------------------------------------------------
         # Tab 4: Overlay Background
@@ -535,19 +686,51 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
                     subject_img = gr.Image(type="filepath", label="Subject Image", image_mode="RGBA", height=300)
                     background_img = gr.Image(type="filepath", label="Background Image", image_mode="RGB", height=300)
                 with gr.Column():
-                    compositor_output = gr.Image(type="pil", label="Result", height=500)
+                    compositor_output = gr.Image(type="pil", label="Result", interactive=False, height=400)
                     with gr.Row():
                         position_slider = gr.Slider(0, 100, 50, label="Background Position")
                         show_bg_toggle = gr.Checkbox(label="Show Background Preview")
                         blur_toggle = gr.Checkbox(label="Enable Blur")
                         blur_strength = gr.Slider(0, 8, 0, step=0.1, visible=False)
+                        file_type_overlay = gr.Dropdown([".png", ".jpg", ".webp"], value=".png", label="File Type")
+
+                    # Add output fields using the reusable function
+                    with gr.Accordion("✂️ Output Details", open=False):
+                        (output_width_overlay, output_height_overlay, output_aspect_ratio_overlay, output_megapixels_overlay,
+                         filename_display_overlay, save_dir_overlay, save_button_overlay) = create_output_ui_components(label_prefix="Overlay")
+
+            # Show/hide blur strength slider based on blur toggle
             blur_toggle.change(lambda x: gr.update(visible=x), blur_toggle, blur_strength)
-            components_overlay = [subject_img, background_img, show_bg_toggle, position_slider, blur_toggle, blur_strength]
-            process_button_overlay = gr.Button("Process Image", variant="primary")
+
+            # Action buttons for overlay background on one row
+            with gr.Row():
+                process_button_overlay = gr.Button("Process Image", variant="primary")
+                paste_last_button_tab4_subject = gr.Button("Paste to Subject")
+                paste_last_button_tab4_background = gr.Button("Paste to Background")
+
+            # Bind actions
             process_button_overlay.click(
-                process_images,
-                inputs=components_overlay,
-                outputs=compositor_output
+                process_and_store_overlay,
+                [subject_img, background_img, show_bg_toggle, position_slider, blur_toggle, blur_strength],
+                [compositor_output, output_width_overlay, output_height_overlay, output_aspect_ratio_overlay, output_megapixels_overlay]
+            )
+            # Paste last processed image to subject or background
+            paste_last_button_tab4_subject.click(
+                lambda: gr.update(value=last_output_global),
+                [],
+                [subject_img]
+            )
+            paste_last_button_tab4_background.click(
+                lambda: gr.update(value=last_output_global),
+                [],
+                [background_img]
+            )
+
+            # Save button for overlay background
+            save_button_overlay.click(
+                save_image,
+                [compositor_output, file_type_overlay, save_dir_overlay],
+                filename_display_overlay
             )
 
         # ---------------------------------------------------
@@ -555,18 +738,25 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
         # ---------------------------------------------------
         with gr.Tab("🎨 Colour Background"):
             with gr.Row():
-                bg_type = gr.Radio(
-                    ["Solid Color", "Gradient Background"], value="Solid Color",
-                    label="Background Type"
-                )
-                generate_only = gr.Checkbox(
-                    label="Generate Background Only (skip overlay)", value=False
-                )
+                with gr.Column(scale=1):
+                    bg_type = gr.Radio(
+                        ["Solid Color", "Gradient Background"], value="Solid Color",
+                        label="Background Type", scale=2
+                    )
+                with gr.Column(scale=1):
+                    generate_only = gr.Checkbox(
+                        label="Generate Background Only (skip overlay)", value=False, scale=1
+                    )
+                    # Action buttons on one row for Colour Background
+                    with gr.Row():
+                        process_button_color = gr.Button("Process Image", variant="primary")
+                        paste_last_button_tab5 = gr.Button("Paste Last Image")
+
             with gr.Row():
                 with gr.Column():
                     input_img_color = gr.Image(
                         type="filepath", label="Input Image", image_mode="RGBA",
-                        visible=True
+                        visible=True, height=300
                     )
                     width_input = gr.Number(
                         label="Width", value=813, interactive=True, visible=False
@@ -604,8 +794,12 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
                                     update_solid_preview(120, 100, 50), label="Bottom Preview"
                                 )
                 with gr.Column():
-                    output_img_color = gr.Image(type="pil", label="Result", height=550)
-                    process_button_color = gr.Button("Process Image", variant="primary")
+                    output_img_color = gr.Image(type="pil", label="Result", interactive=False, height=300)
+
+                    # Add output fields using the reusable function
+                    with gr.Accordion("✂️ Output Details", open=False):
+                        (output_width_color, output_height_color, output_aspect_ratio_color, output_megapixels_color,
+                         filename_display_color, save_dir_color, save_button_color) = create_output_ui_components(label_prefix="Color")
 
             # Show/hide input vs size fields based on generate_only
             generate_only.change(
@@ -636,16 +830,34 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
                     s.change(update_solid_preview, list(s_grp), preview)
 
             # Final processing
+            # Bind process action and store global output
             process_button_color.click(
-                apply_background,
-                inputs=[
+                process_and_store_color,
+                [
                     input_img_color, bg_type,
                     hue, sat, lum,
                     t_hue, t_sat, t_lum,
                     b_hue, b_sat, b_lum,
                     generate_only, width_input, height_input
                 ],
-                outputs=output_img_color
+                [
+                    output_img_color,
+                    output_width_color, output_height_color, output_aspect_ratio_color, output_megapixels_color
+                ]
+            )
+
+            # Save button for color background
+            # Paste last image into colour tab input
+            paste_last_button_tab5.click(
+                lambda: gr.update(value=last_output_global),
+                [],
+                [input_img_color]
+            )
+            # Save button for color background
+            save_button_color.click(
+                save_image,
+                [output_img_color, file_type_crop, save_dir_color],
+                filename_display_color
             )
 
         ############################
@@ -655,30 +867,60 @@ with gr.Blocks(title="Image Processor", theme=theme, css=".gradio-container {max
         with gr.Tab("🎥 Vignette Generator"):
             with gr.Row():
                 with gr.Column(scale=10):
-                    input_img_vig = gr.Image(type="numpy", label="Input Image", height=500)
+                    input_img_vig = gr.Image(type="numpy", label="Input Image", height=465)
                 with gr.Column(scale=10):
-                    img_scale_slider = gr.Slider(0.1, 1.0, 1.0, step=0.01, label="Image Scale (10%–100%)")
+                    brightness_slider = gr.Slider(0.0, 2.0, 1.0, step=0.01, label="Brightness (0–200%)")
                     exp_slider = gr.Slider(-2.5, 0.0, -1.7, step=0.01, label="Exposure (stops)")
                     hard_slider = gr.Slider(0.4, 1.0, 0.65, step=0.01, label="Hardness (0=blur,1=hard edge)")
                     scale_slider = gr.Slider(0.0, 1.0, 0.60, step=0.01, label="Vignette Scale")
                     shape_slider = gr.Slider(0.25, 0.75, 0.50, step=0.01, label="Shape (0=tall ellipse,0.5=circle,1=wide ellipse)")
                     fill_checkbox = gr.Checkbox(label="Fill with 50% grey", value=False)
-                    process_btn_vig = gr.Button("Process Vignette", variant="primary")
+                    with gr.Row():
+                        process_btn_vig = gr.Button("Process Vignette", variant="primary")
+                        paste_last_button_vig = gr.Button("Paste Last Image")
                 with gr.Column(scale=10):
-                    output_img_vig = gr.Image(type="numpy", label="Vignette Result", height=500)
+                    output_img_vig = gr.Image(type="numpy", label="Vignette Result", interactive=False, height=400)
 
+                    # Add output fields using the reusable function
+                    with gr.Accordion("✂️ Output Details", open=False):
+                        (output_width_vig, output_height_vig, output_aspect_ratio_vig, output_megapixels_vig,
+                         filename_display_vig, save_dir_vig, save_button_vig) = create_output_ui_components(label_prefix="Vignette")
+
+                        # Add a Dropdown for file type selection
+                        file_type_vig = gr.Dropdown([".png", ".jpg", ".webp"], value=".png", label="File Type")
+
+            # Process button click event using wrapper that stores and handles None
             process_btn_vig.click(
-                fn=add_vignette_with_ui_params,
+                process_and_store_vignette,
                 inputs=[
                     input_img_vig,
-                    img_scale_slider,
+                    brightness_slider,
                     exp_slider,
                     hard_slider,
                     scale_slider,
                     shape_slider,
                     fill_checkbox
                 ],
-                outputs=[output_img_vig]
+                outputs=[
+                    output_img_vig,
+                    output_width_vig,
+                    output_height_vig,
+                    output_aspect_ratio_vig,
+                    output_megapixels_vig
+                ]
+            )
+
+            # Paste last output image into vignette input
+            paste_last_button_vig.click(
+                lambda: gr.update(value=last_output_global),
+                [],
+                [input_img_vig]
+            )
+            # Save button click event
+            save_button_vig.click(
+                save_image,
+                [output_img_vig, file_type_vig, save_dir_vig],  # Use file_type_vig
+                filename_display_vig
             )
 
 

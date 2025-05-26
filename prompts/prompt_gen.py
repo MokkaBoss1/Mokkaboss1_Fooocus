@@ -238,7 +238,7 @@ def create_gradio_interface() -> gr.Blocks:
         combined_prompt_output  = gr.Textbox(label="✨ Combined Generated Prompt", lines=4)
 
         with gr.Row():
-            generate_btn = gr.Button("Generate Prompt", variant="primary")
+            generate_btn = gr.Button("Generate Prompt and Copy to Clipboard", variant="primary")
             save_button = gr.Button("Save Default Values")
             load_button = gr.Button("Load Default Values")
 
@@ -272,6 +272,7 @@ demo1 = create_gradio_interface()
 if __name__ == "__main__":
     demo1.launch(
         server_name="127.0.0.1",
+        server_port=7863,  # Use port 7863 to avoid conflicts
         share=False,
         inbrowser=True
     )

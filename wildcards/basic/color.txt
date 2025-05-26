@@ -4,6 +4,7 @@ blue
 fuchsia
 gray
 green
+lemon yellow
 lime
 maroon
 navy

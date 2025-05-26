@@ -73,16 +73,14 @@ try:
     pg_toggle_default = _saved.get("pg_toggle", False)
     ro_toggle_default = _saved.get("ro_toggle", False)
     br_toggle_default = _saved.get("br_toggle", False)
-    wc_toggle_default = _saved.get("wc_toggle", False)
 except (FileNotFoundError, json.JSONDecodeError):
-    # first run: create file with all features off
+    # first run: create file with both off
     ip_toggle_default = False
     pg_toggle_default = False
     ro_toggle_default = False
     br_toggle_default = False
-    wc_toggle_default = False
     with open(ADD_FEATURES_FILE, "w") as f:
-        json.dump({"ip_toggle": ip_toggle_default, "pg_toggle": pg_toggle_default, "ro_toggle": ro_toggle_default, "br_toggle": br_toggle_default, "wc_toggle": wc_toggle_default}, f)
+        json.dump({"ip_toggle": ip_toggle_default, "pg_toggle": pg_toggle_default, "ro_toggle": ro_toggle_default, "br_toggle": br_toggle_default}, f)
 
 
 
@@ -952,6 +950,13 @@ with shared.gradio_root:
                                             
                                          
             ip_advanced.change(lambda: None, queue=False, show_progress=False, js=down_js)
+
+            uov_tab.select(lambda: 'uov',        outputs=mode, queue=False, js=down_js, show_progress=False)
+            ip_tab.select(lambda: 'ip',          outputs=mode, queue=False, js=down_js, show_progress=False)
+            inpaint_tab.select(lambda: 'inpaint',outputs=mode, queue=False, js=down_js, show_progress=False)
+            describe_tab.select(lambda: 'desc',  outputs=mode, queue=False, js=down_js, show_progress=False)
+            enhance_tab.select(lambda: 'enhance',outputs=mode, queue=False, js=down_js, show_progress=False)
+            metadata_tab.select(lambda: 'metadata',outputs=mode,queue=False,js=down_js,show_progress=False)
             
             # show/hide the "Enhance" panel
             enhance_checkbox.change(
@@ -1046,7 +1051,9 @@ with shared.gradio_root:
                     ],
                     interactive=True,
                     visible=modules.config.default_image_prompt_checkbox
-                )                # ── Link Input Mode radio to the image_tabs Tabs ─────────────────────
+                )
+
+                # ── Link Input Mode radio to the image_tabs Tabs ─────────────────────
                 tab_map = {
                     "Upscale / Variation": "uov",
                     "Image Prompt":         "ip_tab",
@@ -1055,11 +1062,6 @@ with shared.gradio_root:
                     "Enhance":              "enhance_tab",
                     "Metadata":             "metadata_tab",
                 }
-                
-                # Create a reverse map for updating the radio button when tabs are selected
-                tab_to_mode = {tab_id: mode_name for mode_name, tab_id in tab_map.items()}
-                
-                # When radio button changes, update the selected tab
                 input_mode.change(
                     fn=lambda choice, m=tab_map: gr.update(selected=m[choice]),
                     inputs=[input_mode],
@@ -1067,40 +1069,11 @@ with shared.gradio_root:
                     queue=False,
                     show_progress=False
                 )
-                # Mirror tab selections back to the Input Mode radio
-                uov_tab.select(
-                    lambda: ('uov', 'Upscale / Variation'),
-                    outputs=[mode, input_mode],
-                    queue=False,
-                    show_progress=False
-                )
-                ip_tab.select(
-                    lambda: ('ip', 'Image Prompt'),
-                    outputs=[mode, input_mode],
-                    queue=False,
-                    show_progress=False
-                )
-                inpaint_tab.select(
-                    lambda: ('inpaint', 'Inpaint / Outpaint'),
-                    outputs=[mode, input_mode],
-                    queue=False,
-                    show_progress=False
-                )
-                describe_tab.select(
-                    lambda: ('desc', 'Describe'),
-                    outputs=[mode, input_mode],
-                    queue=False,
-                    show_progress=False
-                )
-                enhance_tab.select(
-                    lambda: ('enhance', 'Enhance'),
-                    outputs=[mode, input_mode],
-                    queue=False,
-                    show_progress=False
-                )
-                metadata_tab.select(
-                    lambda: ('metadata', 'Metadata'),
-                    outputs=[mode, input_mode],
+                
+                input_mode.change(
+                    fn=lambda choice, m=tab_map: gr.update(selected=m[choice]),
+                    inputs=[input_mode],
+                    outputs=[image_tabs],
                     queue=False,
                     show_progress=False
                 )
@@ -1223,15 +1196,7 @@ with shared.gradio_root:
                     bat_path = project / "browse.bat"
                     if not bat_path.exists():
                         raise FileNotFoundError(f"Could not find {bat_path}")
-                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)
-
-                def run_wildcard():
-                    here     = Path(__file__).resolve().parent
-                    project  = here.parent
-                    bat_path = project / "wildcard.bat"
-                    if not bat_path.exists():
-                        raise FileNotFoundError(f"Could not find {bat_path}")
-                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)                     
+                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)                    
 
                 with gr.Blocks() as demo:
                     with gr.Row(): 
@@ -1255,18 +1220,9 @@ with shared.gradio_root:
                             "📂 Image Browser", 
                             scale=2, 
                             visible=br_toggle_default    # ← use the loaded default
-                        )
-                        wc_btn = gr.Button(
-                            "🎲 Edit Wildcards", 
-                            scale=2, 
-                            visible=wc_toggle_default    # ← use the loaded default
-                        )
+                        )                       
 
-
-
-                        
-
-                        gr.Button("📚 Image Log", scale=2).click(
+                        gr.Button("📚 Image History Log",        scale=2).click(
                             fn=None, inputs=[], outputs=[],
                             js=f"() => window.open('{history_url}', '_blank')"
                         )
@@ -1295,17 +1251,6 @@ with shared.gradio_root:
                     outputs=[],
                     queue=False
                 )
-                wc_btn.click(
-                    fn=run_wildcard,    # Python function to run
-                    inputs=[],
-                    outputs=[],
-                    queue=False
-                )                
-                
-                
-                
-                
-                
     ###########################################################
     #                9.2 Start of Styles tab n                #
     ###########################################################
@@ -1505,11 +1450,11 @@ with shared.gradio_root:
                         disable_intermediate_results = gr.Checkbox(label='Disable Intermediate Results',
                                                       value=flags.Performance.has_restricted_features(modules.config.default_performance),
                                                       info='Disable intermediate results during generation, only show final gallery.')
+
                         disable_seed_increment = gr.Checkbox(label='Disable seed increment',
-                                                      info='Disable automatic seed increment when image number is > 1.',
-                                                      value=False)
-                        read_wildcards_in_order = gr.Checkbox(label="Read wildcards in order", value=True,
-                                                            info='Read wildcards in sequential order instead of randomly')
+                                                             info='Disable automatic seed increment when image number is > 1.',
+                                                             value=False)
+                        read_wildcards_in_order = gr.Checkbox(label="Read wildcards in order", value=False)
 
                         black_out_nsfw = gr.Checkbox(label='Black Out NSFW', value=modules.config.default_black_out_nsfw,
                                                      interactive=not modules.config.default_black_out_nsfw,
@@ -1689,49 +1634,40 @@ with shared.gradio_root:
                         label='Image Browser',
                         value=br_toggle_default  # ← use loaded default
                     )                    
-                    wc_toggle = gr.Checkbox(
-                        label='Edit Wildcards',
-                        value=wc_toggle_default  # ← use loaded default
-                    )                    
+                    
                     
                     
                     
                     
 
-                    def _save_add_features(ip_val, pg_val, ro_val, br_val, wc_val):
+                    def _save_add_features(ip_val, pg_val, ro_val, br_val):
                         with open(ADD_FEATURES_FILE, "w") as f:
-                            json.dump({"ip_toggle": ip_val, "pg_toggle": pg_val, "ro_toggle": ro_val, "br_toggle": br_val, "wc_toggle": wc_val}, f)
+                            json.dump({"ip_toggle": ip_val, "pg_toggle": pg_val, "ro_toggle": ro_val, "br_toggle": br_val}, f)
 
                     ip_toggle.change(
                         fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
+                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle],
+                        outputs=[ip_btn, pg_btn, ro_btn, br_btn],
                         queue=False,
                     )
                     pg_toggle.change(
                         fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
+                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle],
+                        outputs=[ip_btn, pg_btn, ro_btn, br_btn],
                         queue=False,
                     )                                    
                     ro_toggle.change(
                         fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
+                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle],
+                        outputs=[ip_btn, pg_btn, ro_btn, br_btn],
                         queue=False,
                     )                     
                     br_toggle.change(
                         fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
+                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle],
+                        outputs=[ip_btn, pg_btn, ro_btn, br_btn],
                         queue=False,
-                    )
-                    wc_toggle.change(
-                        fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
-                        queue=False,
-                    )                      
+                    )                   
 
     ###########################################################
     #                9.8 End of Audio tab                     #

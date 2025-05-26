@@ -73,16 +73,14 @@ try:
     pg_toggle_default = _saved.get("pg_toggle", False)
     ro_toggle_default = _saved.get("ro_toggle", False)
     br_toggle_default = _saved.get("br_toggle", False)
-    wc_toggle_default = _saved.get("wc_toggle", False)
 except (FileNotFoundError, json.JSONDecodeError):
-    # first run: create file with all features off
+    # first run: create file with both off
     ip_toggle_default = False
     pg_toggle_default = False
     ro_toggle_default = False
     br_toggle_default = False
-    wc_toggle_default = False
     with open(ADD_FEATURES_FILE, "w") as f:
-        json.dump({"ip_toggle": ip_toggle_default, "pg_toggle": pg_toggle_default, "ro_toggle": ro_toggle_default, "br_toggle": br_toggle_default, "wc_toggle": wc_toggle_default}, f)
+        json.dump({"ip_toggle": ip_toggle_default, "pg_toggle": pg_toggle_default, "ro_toggle": ro_toggle_default, "br_toggle": br_toggle_default}, f)
 
 
 
@@ -1223,15 +1221,7 @@ with shared.gradio_root:
                     bat_path = project / "browse.bat"
                     if not bat_path.exists():
                         raise FileNotFoundError(f"Could not find {bat_path}")
-                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)
-
-                def run_wildcard():
-                    here     = Path(__file__).resolve().parent
-                    project  = here.parent
-                    bat_path = project / "wildcard.bat"
-                    if not bat_path.exists():
-                        raise FileNotFoundError(f"Could not find {bat_path}")
-                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)                     
+                    subprocess.Popen([str(bat_path)], cwd=str(project), shell=True)                    
 
                 with gr.Blocks() as demo:
                     with gr.Row(): 
@@ -1255,18 +1245,9 @@ with shared.gradio_root:
                             "📂 Image Browser", 
                             scale=2, 
                             visible=br_toggle_default    # ← use the loaded default
-                        )
-                        wc_btn = gr.Button(
-                            "🎲 Edit Wildcards", 
-                            scale=2, 
-                            visible=wc_toggle_default    # ← use the loaded default
-                        )
+                        )                       
 
-
-
-                        
-
-                        gr.Button("📚 Image Log", scale=2).click(
+                        gr.Button("📚 Image History Log",        scale=2).click(
                             fn=None, inputs=[], outputs=[],
                             js=f"() => window.open('{history_url}', '_blank')"
                         )
@@ -1295,17 +1276,6 @@ with shared.gradio_root:
                     outputs=[],
                     queue=False
                 )
-                wc_btn.click(
-                    fn=run_wildcard,    # Python function to run
-                    inputs=[],
-                    outputs=[],
-                    queue=False
-                )                
-                
-                
-                
-                
-                
     ###########################################################
     #                9.2 Start of Styles tab n                #
     ###########################################################
@@ -1505,11 +1475,11 @@ with shared.gradio_root:
                         disable_intermediate_results = gr.Checkbox(label='Disable Intermediate Results',
                                                       value=flags.Performance.has_restricted_features(modules.config.default_performance),
                                                       info='Disable intermediate results during generation, only show final gallery.')
+
                         disable_seed_increment = gr.Checkbox(label='Disable seed increment',
-                                                      info='Disable automatic seed increment when image number is > 1.',
-                                                      value=False)
-                        read_wildcards_in_order = gr.Checkbox(label="Read wildcards in order", value=True,
-                                                            info='Read wildcards in sequential order instead of randomly')
+                                                             info='Disable automatic seed increment when image number is > 1.',
+                                                             value=False)
+                        read_wildcards_in_order = gr.Checkbox(label="Read wildcards in order", value=True)
 
                         black_out_nsfw = gr.Checkbox(label='Black Out NSFW', value=modules.config.default_black_out_nsfw,
                                                      interactive=not modules.config.default_black_out_nsfw,
@@ -1689,49 +1659,40 @@ with shared.gradio_root:
                         label='Image Browser',
                         value=br_toggle_default  # ← use loaded default
                     )                    
-                    wc_toggle = gr.Checkbox(
-                        label='Edit Wildcards',
-                        value=wc_toggle_default  # ← use loaded default
-                    )                    
+                    
                     
                     
                     
                     
 
-                    def _save_add_features(ip_val, pg_val, ro_val, br_val, wc_val):
+                    def _save_add_features(ip_val, pg_val, ro_val, br_val):
                         with open(ADD_FEATURES_FILE, "w") as f:
-                            json.dump({"ip_toggle": ip_val, "pg_toggle": pg_val, "ro_toggle": ro_val, "br_toggle": br_val, "wc_toggle": wc_val}, f)
+                            json.dump({"ip_toggle": ip_val, "pg_toggle": pg_val, "ro_toggle": ro_val, "br_toggle": br_val}, f)
 
                     ip_toggle.change(
                         fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
+                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle],
+                        outputs=[ip_btn, pg_btn, ro_btn, br_btn],
                         queue=False,
                     )
                     pg_toggle.change(
                         fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
+                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle],
+                        outputs=[ip_btn, pg_btn, ro_btn, br_btn],
                         queue=False,
                     )                                    
                     ro_toggle.change(
                         fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
+                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle],
+                        outputs=[ip_btn, pg_btn, ro_btn, br_btn],
                         queue=False,
                     )                     
                     br_toggle.change(
                         fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
+                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle],
+                        outputs=[ip_btn, pg_btn, ro_btn, br_btn],
                         queue=False,
-                    )
-                    wc_toggle.change(
-                        fn=on_feature_toggle,
-                        inputs=[ip_toggle, pg_toggle, ro_toggle, br_toggle, wc_toggle],
-                        outputs=[ip_btn, pg_btn, ro_btn, br_btn, wc_btn],
-                        queue=False,
-                    )                      
+                    )                   
 
     ###########################################################
     #                9.8 End of Audio tab                     #
